@@ -17,6 +17,10 @@ end)
 	
 AddPrefabPostInit("wolfgang", function(inst)
 	inst:AddTag("mightyman")
+	
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_potato_soup", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
 end)
 
 AddPrefabPostInit("wendy", function(inst)
@@ -64,6 +68,12 @@ end)
 AddPrefabPostInit("wormwood", function(inst)
 	if inst.components.foodaffinity then
 		inst.components.foodaffinity:AddPrefabAffinity("gummy_cake", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
+end)
+
+AddPrefabPostInit("wurt", function(inst)
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_vegetable_soup", TUNING.AFFINITY_15_CALORIES_HUGE)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -177,7 +187,7 @@ AddPrefabPostInit("ash", function(inst)
 		return inst
 	end
     inst:AddTag("coffeefertilizer")
-    inst:AddComponent("fertilizer")
+    -- inst:AddComponent("fertilizer")
 end)
 
 -- Coffee Plant can be Only Fertilized by Ashes.
@@ -222,13 +232,29 @@ AddPrefabPostInit("catcoon", function(inst)
 	end
 end)
 
--- Puffins Spawns Roe Periodically.
+-- Some Birds Spawns Roe Periodically.
 AddPrefabPostInit("puffin", function(inst)
 	if inst.components.periodicspawner ~= nil then
 		inst.components.periodicspawner:SetPrefab("kyno_roe")
 		inst.components.periodicspawner:SetDensityInRange(20, 2)
 		inst.components.periodicspawner:SetMinimumSpacing(3)
-		end
+	end
+end)
+
+AddPrefabPostInit("robin_winter", function(inst)
+	if inst.components.periodicspawner ~= nil then
+		inst.components.periodicspawner:SetPrefab("kyno_roe")
+		inst.components.periodicspawner:SetDensityInRange(20, 2)
+		inst.components.periodicspawner:SetMinimumSpacing(3)
+	end
+end)
+
+AddPrefabPostInit("canary", function(inst)
+	if inst.components.periodicspawner ~= nil then
+		inst.components.periodicspawner:SetPrefab("kyno_roe")
+		inst.components.periodicspawner:SetDensityInRange(20, 2)
+		inst.components.periodicspawner:SetMinimumSpacing(3)
+	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Theorically Tea Cool Down and Turns into Iced Tea.
@@ -242,7 +268,7 @@ end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- It's Cursed. Players Have a Chance to Drop Long Pig. Except WX-78, Wurt, Wortox and Wormwood.
 local function ondeath_longpig(inst)
-	if math.random()<0.1 then
+	if math.random()<0.15 then
 		GLOBAL.SpawnPrefab("kyno_humanmeat").Transform:SetPosition(inst.Transform:GetWorldPosition())
 	end
 end

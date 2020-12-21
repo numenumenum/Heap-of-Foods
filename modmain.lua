@@ -49,6 +49,7 @@ PrefabFiles =
 	"k_superregenbuff",
 	"k_humanmeat",
 	"k_gourmetingredients",
+	"ash",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- New Crock Pot Ingredients.
@@ -59,9 +60,11 @@ AddIngredientValues({"slurtle_shellpieces"}, {inedible=1}, {shell=1}, true)
 AddIngredientValues({"rabbit"}, {rabbit=1}, true)
 AddIngredientValues({"firenettles"}, {veggie=0.5}, true)
 AddIngredientValues({"foliage"}, {veggie=0.5}, true)
+AddIngredientValues({"succulent_picked"}, {veggie=0.5}, true)
 AddIngredientValues({"robin_winter"}, {robin_winter=1}, true)
 AddIngredientValues({"petals"}, {veggie=0.5}, true)
 AddIngredientValues({"gears"}, {gears=1}, true)
+AddIngredientValues({"rocks"}, {rocks=1}, {elemental=1}, {inedible=1}, true)
 AddIngredientValues({"kyno_coffeebeans_cooked"}, {seeds=1}, {fruit=0.5}, true)
 AddIngredientValues({"kyno_coffeebeans"}, {seeds=1}, {fruit=0.5}, true)
 AddIngredientValues({"kyno_shark_fin"}, {fish=1}, true)
@@ -91,9 +94,11 @@ RegisterInventoryItemAtlas("images/inventoryimages.xml", "slurtle_shellpieces.te
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "rabbit.tex")
 RegisterInventoryItemAtlas("images/inventoryimages1.xml", "firenettles.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "foliage.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "succulent_picked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "robin_winter.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "petals.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "gears.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "rocks.tex")
 
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_coffeebeans_cooked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_coffeebeans.tex")
@@ -185,13 +190,28 @@ local kynofoods =
 	jellybean_hunger = require("kyno_foodrecipes").jellybean_hunger,
 	jellybean_super = require("kyno_foodrecipes").jellybean_super,
 	
-	-- Secret / Custom.
+	-- Secret Custom.
 	bowlofgears = require("kyno_foodrecipes").bowlofgears,
 	longpigmeal = require("kyno_foodrecipes").longpigmeal,
 	
 	-- The Gorge.
 	gorge_bread = require("kyno_foodrecipes").gorge_bread,
 	gorge_potato_chips = require("kyno_foodrecipes").gorge_potato_chips,
+	gorge_vegetable_soup = require("kyno_foodrecipes").gorge_vegetable_soup,
+	gorge_jelly_sandwich = require("kyno_foodrecipes").gorge_jelly_sandwich,
+	gorge_fish_stew = require("kyno_foodrecipes").gorge_fish_stew,
+	gorge_onion_cake = require("kyno_foodrecipes").gorge_onion_cake,
+	gorge_potato_pancakes = require("kyno_foodrecipes").gorge_potato_pancakes,
+	gorge_potato_soup = require("kyno_foodrecipes").gorge_potato_soup,
+	gorge_fishball_skewers = require("kyno_foodrecipes").gorge_fishball_skewers,
+	gorge_meat_skewers = require("kyno_foodrecipes").gorge_meat_skewers,
+	gorge_stone_soup = require("kyno_foodrecipes").gorge_stone_soup,
+	gorge_croquette = require("kyno_foodrecipes").gorge_croquette,
+	gorge_roast_vegetables = require("kyno_foodrecipes").gorge_roast_vegetables,
+	gorge_meatloaf = require("kyno_foodrecipes").gorge_meatloaf,
+	gorge_carrot_soup = require("kyno_foodrecipes").gorge_carrot_soup,
+	gorge_fishpie = require("kyno_foodrecipes").gorge_fishpie,
+	gorge_fishchips = require("kyno_foodrecipes").gorge_fishchips,
 }
 
 kynofoods.coffee.potlevel = "med"
@@ -221,7 +241,22 @@ kynofoods.jellybean_super.potlevel = "med"
 kynofoods.bowlofgears.potlevel = "med"
 kynofoods.longpigmeal.potlevel = "med"
 kynofoods.gorge_bread.potlevel = "med"
-kynofoods.gorge_potato_chips.potlevel = "high"
+kynofoods.gorge_potato_chips.potlevel = "med"
+kynofoods.gorge_vegetable_soup.potlevel = "med"
+kynofoods.gorge_jelly_sandwich.potlevel = "med"
+kynofoods.gorge_fish_stew.potlevel = "med"
+kynofoods.gorge_onion_cake.potlevel = "med"
+kynofoods.gorge_potato_pancakes.potlevel = "med"
+kynofoods.gorge_potato_soup.potlevel = "med"
+kynofoods.gorge_fishball_skewers.potlevel = "med"
+kynofoods.gorge_meat_skewers.potlevel = "med"
+kynofoods.gorge_stone_soup.potlevel = "med"
+kynofoods.gorge_croquette.potlevel = "med"
+kynofoods.gorge_roast_vegetables.potlevel = "med"
+kynofoods.gorge_meatloaf.potlevel = "low"
+kynofoods.gorge_carrot_soup.potlevel = "med"
+kynofoods.gorge_fishpie.potlevel = "med"
+kynofoods.gorge_fishchips.potlevel = "med"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Food On Stations.
 for name, recipe in pairs(kynofoods) do
@@ -354,7 +389,9 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"kyno_humanmeat", "kyno_humanmeat_dried", "coffee", "bisque", "jellyopop", "musselbouillabaise", "sharkfinsoup", "sweetpotatosouffle", "caviar", "tropicalbouillabaisse", 
 	"feijoada", "gummy_cake", "hardshell_tacos", "icedtea", "tea", "nettlelosange", "snakebonesoup", "steamedhamsandwich", "bubbletea", "frenchonionsoup", "slaw", 
 	"lotusbowl", "poi", "jellybean_sanity", "jellybean_hunger", "jellybean_super", "bowlofgears", "longpigmeal", "kyno_syrup", "kyno_flour", "kyno_spotspice", "kyno_bacon",
-	"kyno_bacon_cooked", "gorge_bread", "gorge_potato_chips"}) do
+	"kyno_bacon_cooked", "gorge_bread", "gorge_potato_chips", "gorge_vegetable_soup", "gorge_jelly_sandwich", "gorge_fish_stew", "gorge_onion_cake",
+	"gorge_potato_pancakes", "gorge_potato_soup", "gorge_fishball_skewers", "gorge_meat_skewers", "gorge_stone_soup", "gorge_croquette", "gorge_roast_vegetables",
+	"gorge_meatloaf", "gorge_carrot_soup", "gorge_fishpie", "gorge_fishchips"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name
