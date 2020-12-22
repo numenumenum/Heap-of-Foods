@@ -41,6 +41,12 @@ AddPrefabPostInit("wickerbottom", function(inst)
 	end
 end)
 
+AddPrefabPostInit("woodie", function(inst)
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_sliders", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
+end)
+
 AddPrefabPostInit("wes", function(inst)
 	if inst.components.foodaffinity then
 		inst.components.foodaffinity:AddPrefabAffinity("sharkfinsoup", TUNING.AFFINITY_15_CALORIES_HUGE)

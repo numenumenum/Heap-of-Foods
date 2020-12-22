@@ -26,7 +26,8 @@ local function fn()
 	inst.AnimState:SetBank("mussel")
 	inst.AnimState:SetBuild("mussel")
 	inst.AnimState:PlayAnimation("idle")
-
+	
+	inst:AddTag("meat")
 	inst:AddTag("cookable")
 
 	inst.entity:SetPristine()
@@ -39,13 +40,14 @@ local function fn()
 	inst:AddComponent("bait")
 	
 	inst:AddComponent("tradable")
-	inst.components.tradable.goldvalue = TUNING.GOLD_VALUES.MEAT
+	inst.components.tradable.goldvalue = 1
 
    	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = 0
 	inst.components.edible.hungervalue = 12.5
 	inst.components.edible.sanityvalue = -15
 	inst.components.edible.foodtype = FOODTYPE.MEAT
+	inst.components.edible.ismeat = true
 
 	inst:AddComponent("perishable")
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_SUPERFAST)
@@ -82,6 +84,8 @@ local function fn_cooked()
 	inst.AnimState:SetBank("mussel")
 	inst.AnimState:SetBuild("mussel")
 	inst.AnimState:PlayAnimation("cooked")
+	
+	inst:AddTag("meat")
 
 	inst.entity:SetPristine()
 
@@ -93,13 +97,14 @@ local function fn_cooked()
 	inst:AddComponent("bait")
 	
 	inst:AddComponent("tradable")
-	inst.components.tradable.goldvalue = TUNING.GOLD_VALUES.MEAT
+	inst.components.tradable.goldvalue = 1
 
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = 1
 	inst.components.edible.hungervalue = 12.5
 	inst.components.edible.sanityvalue = 0
 	inst.components.edible.foodtype = FOODTYPE.MEAT
+	inst.components.edible.ismeat = true
 	
 	inst:AddComponent("perishable")
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_MED)

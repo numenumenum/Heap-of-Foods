@@ -41,6 +41,7 @@ local function fn()
 	inst.AnimState:SetBuild("coffeebeans")
 	inst.AnimState:PlayAnimation("idle")
 
+	inst:AddTag("veggie")
 	inst:AddTag("cookable")
 
 	inst.entity:SetPristine()
@@ -94,6 +95,8 @@ local function fn_cooked()
 	inst.AnimState:SetBank("coffeebeans")
 	inst.AnimState:SetBuild("coffeebeans")
 	inst.AnimState:PlayAnimation("cooked")
+	
+	inst:AddTag("veggie")
 
 	inst.entity:SetPristine()
 

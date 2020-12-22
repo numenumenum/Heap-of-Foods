@@ -46,7 +46,7 @@ local function fn()
 	inst:AddComponent("selfstacker")
 	
 	inst:AddComponent("tradable")
-	inst.components.tradable.goldvalue = 2
+	inst.components.tradable.goldvalue = 1
 
    	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = -20
@@ -110,7 +110,7 @@ local function fn_cooked()
 	inst:AddComponent("bait")
 	
 	inst:AddComponent("tradable")
-	inst.components.tradable.goldvalue = 2
+	inst.components.tradable.goldvalue = 1
 
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = -3
@@ -165,7 +165,7 @@ local function fn_dried()
 	inst:AddComponent("bait")
 	
 	inst:AddComponent("tradable")
-	inst.components.tradable.goldvalue = 2
+	inst.components.tradable.goldvalue = 1
 
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = -3

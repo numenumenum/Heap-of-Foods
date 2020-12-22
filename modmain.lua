@@ -20,8 +20,8 @@ Assets =
 {	
 	Asset("ANIM", "anim/kyno_humanmeat.zip"),
 
-	Asset("IMAGE", "images/minimapimages/kyno_minimap.tex"),
-	Asset("ATLAS", "images/minimapimages/kyno_minimap.xml"),
+	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
+	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
 	
 	Asset("IMAGE", "images/cookbookimages/kyno_cookbook.tex"),
 	Asset("ATLAS", "images/cookbookimages/kyno_cookbook.xml"),
@@ -85,9 +85,11 @@ AddIngredientValues({"kyno_spotspice"}, {inedible=1}, {spotspice=1}, true)
 AddIngredientValues({"kyno_bacon"}, {meat=0.5}, {bacon=1}, true)
 AddIngredientValues({"kyno_bacon_cooked"}, {meat=0.5}, {bacon=1}, true)
 AddIngredientValues({"gorge_bread"}, {bread=1}, true)
+AddIngredientValues({"kyno_white_cap"}, {veggie=0.5}, {mushroom=1}, true)
+AddIngredientValues({"kyno_white_cap_cooked"}, {veggie=0.5}, {mushroom=1}, true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Minimap Icons.
-AddMinimapAtlas("images/minimapimages/kyno_minimap.xml")
+AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Icons For Cookbook.
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "slurtle_shellpieces.tex")
@@ -121,19 +123,24 @@ RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_s
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_bacon.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_bacon_cooked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "gorge_bread.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_white_cap.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_white_cap_cooked.tex")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Ingredient Recipes.
-local KynFlour = AddRecipe("kyno_flour", {Ingredient("seeds", 2), Ingredient("cutgrass", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
+local KynFlour = AddRecipe("kyno_flour", {Ingredient("seeds", 1), Ingredient("cutgrass", 1)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
 
 local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("foliage", 1), Ingredient("garlic", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
-local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 3)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
+local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 1)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
 
-local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 2)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
+local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
+
+local KynMush = AddRecipe("kyno_white_cap", {Ingredient("red_cap", 1)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_mushrooms.tex")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -212,6 +219,20 @@ local kynofoods =
 	gorge_carrot_soup = require("kyno_foodrecipes").gorge_carrot_soup,
 	gorge_fishpie = require("kyno_foodrecipes").gorge_fishpie,
 	gorge_fishchips = require("kyno_foodrecipes").gorge_fishchips,
+	gorge_meatpie = require("kyno_foodrecipes").gorge_meatpie,
+	gorge_sliders = require("kyno_foodrecipes").gorge_sliders,
+	gorge_jelly_roll = require("kyno_foodrecipes").gorge_jelly_roll,
+	gorge_carrot_cake = require("kyno_foodrecipes").gorge_carrot_cake,
+	gorge_garlicmashed = require("kyno_foodrecipes").gorge_garlicmashed,
+	gorge_garlicbread = require("kyno_foodrecipes").gorge_garlicbread,
+	gorge_tomato_soup = require("kyno_foodrecipes").gorge_tomato_soup,
+	gorge_sausage = require("kyno_foodrecipes").gorge_sausage,
+	gorge_candiedfish = require("kyno_foodrecipes").gorge_candiedfish,
+	gorge_stuffedmushroom = require("kyno_foodrecipes").gorge_stuffedmushroom,
+	gorge_bruschetta = require("kyno_foodrecipes").gorge_bruschetta,
+	gorge_hamburger = require("kyno_foodrecipes").gorge_hamburger,
+	gorge_fishburger = require("kyno_foodrecipes").gorge_fishburger,
+	gorge_mushroomburger = require("kyno_foodrecipes").gorge_mushroomburger,
 }
 
 kynofoods.coffee.potlevel = "med"
@@ -257,6 +278,20 @@ kynofoods.gorge_meatloaf.potlevel = "low"
 kynofoods.gorge_carrot_soup.potlevel = "med"
 kynofoods.gorge_fishpie.potlevel = "med"
 kynofoods.gorge_fishchips.potlevel = "med"
+kynofoods.gorge_meatpie.potlevel = "med"
+kynofoods.gorge_sliders.potlevel = "med"
+kynofoods.gorge_jelly_roll.potlevel = "med"
+kynofoods.gorge_carrot_cake.potlevel = "med"
+kynofoods.gorge_garlicmashed.potlevel = "med"
+kynofoods.gorge_garlicbread.potlevel = "med"
+kynofoods.gorge_tomato_soup.potlevel = "med"
+kynofoods.gorge_sausage.potlevel = "med"
+kynofoods.gorge_candiedfish.potlevel = "low"
+kynofoods.gorge_stuffedmushroom.potlevel = "low"
+kynofoods.gorge_bruschetta.potlevel = "med"
+kynofoods.gorge_hamburger.potlevel = "med"
+kynofoods.gorge_fishburger.potlevel = "med"
+kynofoods.gorge_mushroomburger.potlevel = "med"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Food On Stations.
 for name, recipe in pairs(kynofoods) do
@@ -391,7 +426,9 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"lotusbowl", "poi", "jellybean_sanity", "jellybean_hunger", "jellybean_super", "bowlofgears", "longpigmeal", "kyno_syrup", "kyno_flour", "kyno_spotspice", "kyno_bacon",
 	"kyno_bacon_cooked", "gorge_bread", "gorge_potato_chips", "gorge_vegetable_soup", "gorge_jelly_sandwich", "gorge_fish_stew", "gorge_onion_cake",
 	"gorge_potato_pancakes", "gorge_potato_soup", "gorge_fishball_skewers", "gorge_meat_skewers", "gorge_stone_soup", "gorge_croquette", "gorge_roast_vegetables",
-	"gorge_meatloaf", "gorge_carrot_soup", "gorge_fishpie", "gorge_fishchips"}) do
+	"gorge_meatloaf", "gorge_carrot_soup", "gorge_fishpie", "gorge_fishchips", "gorge_meatpie", "gorge_sliders", "gorge_jelly_roll", "gorge_carrot_cake", "gorge_garlicmashed",
+	"gorge_garlicbread", "gorge_tomato_soup", "gorge_sausage", "gorge_candiedfish", "gorge_stuffedmushroom", "gorge_bruschetta", "gorge_hamburger", "gorge_fishburger",
+	"gorge_mushroomburger", "kyno_white_cap", "kyno_white_cap_cooked"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name

@@ -31,7 +31,8 @@ local function fn()
 	inst.AnimState:SetBank("jellybug")
 	inst.AnimState:SetBuild("jellybug")
 	inst.AnimState:PlayAnimation("idle", true)
-
+	
+	inst:AddTag("veggie")
 	inst:AddTag("cookable")
 
 	inst.entity:SetPristine()
@@ -86,6 +87,8 @@ local function fn_cooked()
 	inst.AnimState:SetBank("jellybug_cooked")
 	inst.AnimState:SetBuild("jellybug_cooked")
 	inst.AnimState:PlayAnimation("cooked", true)
+	
+	inst:AddTag("veggie")
 
 	inst.entity:SetPristine()
 
@@ -136,6 +139,7 @@ local function gumfn()
 	inst.AnimState:SetBuild("slugbug")
 	inst.AnimState:PlayAnimation("idle", true)
 
+	inst:AddTag("veggie")
 	inst:AddTag("cookable")
 
 	inst.entity:SetPristine()
@@ -190,6 +194,8 @@ local function gumfn_cooked()
 	inst.AnimState:SetBank("slugbug_cooked")
 	inst.AnimState:SetBuild("slugbug_cooked")
 	inst.AnimState:PlayAnimation("cooked", true)
+	
+	inst:AddTag("veggie")
 
 	inst.entity:SetPristine()
 

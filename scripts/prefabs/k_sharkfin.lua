@@ -26,7 +26,7 @@ local function fn()
     inst.AnimState:SetBuild("shark_fin")
     inst.AnimState:PlayAnimation("idle")
 
-    inst:AddTag("cattoy")
+    inst:AddTag("meat")
 	inst:AddTag("catfood")
 	inst:AddTag("shark_fin")
 
@@ -49,10 +49,11 @@ local function fn()
 	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
 	
 	inst:AddComponent("edible")
-	inst.components.edible.foodtype = FOODTYPE.MEAT
     inst.components.edible.healthvalue = 20
 	inst.components.edible.hungervalue = 25
 	inst.components.edible.sanityvalue = -15
+	inst.components.edible.foodtype = FOODTYPE.MEAT
+	inst.components.edible.ismeat = true
 
     inst:AddComponent("perishable")
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_FAST)

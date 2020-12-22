@@ -157,8 +157,8 @@ local function createbush(name, inspectname, berryname, master_postinit)
     {
 		Asset("ANIM", "anim/coffeebush.zip"),
 		
-		Asset("IMAGE", "images/minimapimages/kyno_minimap.tex"),
-		Asset("ATLAS", "images/minimapimages/kyno_minimap.xml"),
+		Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
+		Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
     }
 
     local prefabs =
@@ -185,7 +185,7 @@ local function createbush(name, inspectname, berryname, master_postinit)
         inst:AddTag("witherable")
 		
 		local minimap = inst.entity:AddMiniMapEntity()
-		minimap:SetIcon("coffeebush.png")
+		minimap:SetIcon("kyno_coffeebush.tex")
 
         inst.AnimState:SetBank("coffeebush")
         inst.AnimState:SetBuild("coffeebush")
