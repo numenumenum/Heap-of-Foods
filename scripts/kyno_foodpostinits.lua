@@ -222,7 +222,7 @@ end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Rockjaws Drops Shark Fin.
 AddPrefabPostInit("shark", function(inst)
-	if GLOBAL.TheWorld.ismastersim then
+	if GLOBAL.TheWorld.ismastersim and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2174681153") then
 		inst.components.lootdropper:AddChanceLoot("kyno_shark_fin", 1.00) 
 	end
 end)
