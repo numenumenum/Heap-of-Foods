@@ -64,7 +64,7 @@ local kyno_foods =
 	
 	sharkfinsoup = 
 	{
-		test = function(cooker, names, tags) return (names.kyno_shark_fin or names.ecp_shark_fin) end,
+		test = function(cooker, names, tags) return names.kyno_shark_fin end,
 		priority = 20,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -682,7 +682,7 @@ local kyno_foods =
 	gorge_meatpie = 
 	{
 		test = function(cooker, names, tags) return tags.meat and (names.kyno_flour == 2) and tags.veggie and not (names.potato or names.potato_cooked) 
-		and not (names.onion or names.cooked_onion) and not (names.kyno_bacon or names.kyno_bacon_cooked) end,
+		and not (names.onion or names.onion_cooked) and not (names.kyno_bacon or names.kyno_bacon_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_SLOW,
