@@ -3,6 +3,7 @@ local assets =
     Asset("ANIM", "anim/quagmire_flour.zip"),
 	Asset("ANIM", "anim/quagmire_syrup.zip"),
 	Asset("ANIM", "anim/quagmire_spotspice_ground.zip"),
+	Asset("ANIM", "anim/quagmire_spotspice_sprig.zip"),
 	Asset("ANIM", "anim/quagmire_meat_small.zip"),
 	Asset("ANIM", "anim/quagmire_mushrooms.zip"),
 	
@@ -74,6 +75,7 @@ local function syrupfn()
 
 	inst:AddTag("gourmet_syrup")
 	inst:AddTag("gourmet_ingredient")
+	inst:AddTag("show_spoilage")
 
     inst.entity:SetPristine()
 
@@ -91,6 +93,11 @@ local function syrupfn()
     inst:AddComponent("stackable")
 	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
 	
+	inst:AddComponent("perishable")
+	inst.components.perishable:SetPerishTime(TUNING.PERISH_SUPERSLOW)
+	inst.components.perishable:StartPerishing()
+	inst.components.perishable.onperishreplacement = "spoiled_food"
+	
 	--[[
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = 3
@@ -99,6 +106,51 @@ local function syrupfn()
 	inst.components.edible.foodtype = FOODTYPE.GOODIES
 	]]--
 	
+	MakeHauntableLaunchAndPerish(inst)
+
+    return inst
+end
+
+local function sprigfn()
+    local inst = CreateEntity()
+
+    inst.entity:AddTransform()
+    inst.entity:AddAnimState()
+    inst.entity:AddNetwork()
+
+    MakeInventoryPhysics(inst)
+	MakeInventoryFloatable(inst, "small", 0.05)
+
+    inst.AnimState:SetBank("quagmire_spotspice_sprig")
+    inst.AnimState:SetBuild("quagmire_spotspice_sprig")
+    inst.AnimState:PlayAnimation("idle")
+
+	inst:AddTag("gourmet_sprig")
+	inst:AddTag("gourmet_ingredient")
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+	
+    inst:AddComponent("inspectable")
+	inst:AddComponent("tradable")
+
+    inst:AddComponent("inventoryitem")
+	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
+	inst.components.inventoryitem.imagename = "kyno_sprig"
+	
+    inst:AddComponent("stackable")
+	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
+	
+	inst:AddComponent("perishable")
+	inst.components.perishable:SetPerishTime(TUNING.PERISH_MED)
+	inst.components.perishable:StartPerishing()
+	inst.components.perishable.onperishreplacement = "spoiled_food"
+	
+	MakeSmallBurnable(inst)
+	MakeSmallPropagator(inst)
 	MakeHauntableLaunchAndPerish(inst)
 
     return inst
@@ -375,6 +427,7 @@ local function mush_cookedfn()
 end
 
 return Prefab("kyno_flour", flourfn, assets, prefabs),
+-- Prefab("kyno_sprig", sprigfn, assets, prefabs),
 Prefab("kyno_spotspice", spicefn, assets, prefabs),
 Prefab("kyno_syrup", syrupfn, assets, prefabs),
 Prefab("kyno_bacon", baconfn, assets, prefabs),

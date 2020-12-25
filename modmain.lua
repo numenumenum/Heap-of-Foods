@@ -19,9 +19,13 @@ local atlas = (src and src.components.inventoryitem and src.components.inventory
 Assets =
 {	
 	Asset("ANIM", "anim/kyno_humanmeat.zip"),
+	Asset("ANIM", "anim/kyno_mushroomstump.zip"),
 
 	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
 	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
+	
+	Asset("IMAGE", "images/inventoryimages/kyno_mushroomstump.tex"),
+	Asset("ATLAS", "images/inventoryimages/kyno_mushroomstump.xml"),
 	
 	Asset("IMAGE", "images/cookbookimages/kyno_cookbook.tex"),
 	Asset("ATLAS", "images/cookbookimages/kyno_cookbook.xml"),
@@ -49,6 +53,7 @@ PrefabFiles =
 	"k_superregenbuff",
 	"k_humanmeat",
 	"k_gourmetingredients",
+	"k_mushstump",
 	"ash",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,7 +84,7 @@ AddIngredientValues({"kyno_gummybug_cooked"}, {bug=1}, {veggie=0.5}, true)
 AddIngredientValues({"kyno_humanmeat_cooked"}, {meat=1}, {monster=1}, true, true)
 AddIngredientValues({"kyno_humanmeat"}, {meat=1}, {monster=1}, true, true)
 AddIngredientValues({"kyno_humanmeat_dried"}, {meat=1}, {monster=1}, true, true)
-AddIngredientValues({"kyno_syrup"}, {sweetener=0.5}, {syrup=1}, true)
+AddIngredientValues({"kyno_syrup"}, {sweetener=1}, {syrup=1}, true)
 AddIngredientValues({"kyno_flour"}, {inedible=1}, {flour=1}, true)
 AddIngredientValues({"kyno_spotspice"}, {inedible=1}, {spotspice=1}, true)
 AddIngredientValues({"kyno_bacon"}, {meat=0.5}, {bacon=1}, true)
@@ -133,14 +138,16 @@ RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimage
 local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("foliage", 1), Ingredient("garlic", 1)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
-local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 1)},
+local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 3)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
 
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
 
-local KynMush = AddRecipe("kyno_white_cap", {Ingredient("red_cap", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_mushrooms.tex")
+local KynMusher = AddRecipe("kyno_mushstump", {Ingredient("spoiled_food", 4), Ingredient("poop", 3), Ingredient("livinglog", 2)},
+RECIPETABS.FARM, TECH.LOST, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")
+local musher_sortkey = AllRecipes["mushroom_farm"]["sortkey"]
+KynMusher.sortkey = musher_sortkey + 0.1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -233,6 +240,37 @@ local kynofoods =
 	gorge_hamburger = require("kyno_foodrecipes").gorge_hamburger,
 	gorge_fishburger = require("kyno_foodrecipes").gorge_fishburger,
 	gorge_mushroomburger = require("kyno_foodrecipes").gorge_mushroomburger,
+	gorge_fish_steak = require("kyno_foodrecipes").gorge_fish_steak,
+	gorge_curry = require("kyno_foodrecipes").gorge_curry,
+	gorge_spaghetti = require("kyno_foodrecipes").gorge_spaghetti,
+	gorge_poachedfish = require("kyno_foodrecipes").gorge_poachedfish,
+	gorge_shepherd_pie = require("kyno_foodrecipes").gorge_shepherd_pie,
+	gorge_candy = require("kyno_foodrecipes").gorge_candy,
+	gorge_bread_pudding = require("kyno_foodrecipes").gorge_bread_pudding,
+	gorge_berry_tart = require("kyno_foodrecipes").gorge_berry_tart,
+	gorge_macaroni = require("kyno_foodrecipes").gorge_macaroni,
+	gorge_bagel_and_fish = require("kyno_foodrecipes").gorge_bagel_and_fish,
+	gorge_grilled_cheese = require("kyno_foodrecipes").gorge_grilled_cheese,
+	gorge_creammushroom = require("kyno_foodrecipes").gorge_creammushroom,
+	gorge_manicotti = require("kyno_foodrecipes").gorge_manicotti,
+	gorge_cheeseburger = require("kyno_foodrecipes").gorge_cheeseburger,
+	gorge_fettuccine = require("kyno_foodrecipes").gorge_fettuccine,
+	gorge_onion_soup = require("kyno_foodrecipes").gorge_onion_soup,
+	gorge_breaded_cutlet = require("kyno_foodrecipes").gorge_breaded_cutlet,
+	gorge_creamy_fish = require("kyno_foodrecipes").gorge_creamy_fish,
+	gorge_pizza = require("kyno_foodrecipes").gorge_pizza,
+	gorge_pot_roast = require("kyno_foodrecipes").gorge_pot_roast,
+	gorge_crab_cake = require("kyno_foodrecipes").gorge_crab_cake,
+	gorge_steak_frites = require("kyno_foodrecipes").gorge_steak_frites,
+	gorge_shooter_sandwich = require("kyno_foodrecipes").gorge_shooter_sandwich,
+	gorge_bacon_wrapped = require("kyno_foodrecipes").gorge_bacon_wrapped,
+	gorge_crab_roll = require("kyno_foodrecipes").gorge_crab_roll,
+	gorge_meat_wellington = require("kyno_foodrecipes").gorge_meat_wellington,
+	gorge_crab_ravioli = require("kyno_foodrecipes").gorge_crab_ravioli,
+	gorge_caramel_cube = require("kyno_foodrecipes").gorge_caramel_cube,
+	gorge_scone = require("kyno_foodrecipes").gorge_scone,
+	gorge_trifle = require("kyno_foodrecipes").gorge_trifle,
+	gorge_cheesecake = require("kyno_foodrecipes").gorge_cheesecake,
 }
 
 kynofoods.coffee.potlevel = "med"
@@ -248,7 +286,7 @@ kynofoods.gummy_cake.potlevel = "high"
 kynofoods.hardshell_tacos.potlevel = "high"
 kynofoods.icedtea.potlevel = "med"
 kynofoods.tea.potlevel = "med"
-kynofoods.nettlelosange.potlevel = "high"
+kynofoods.nettlelosange.potlevel = "med"
 kynofoods.snakebonesoup.potlevel = "med"
 kynofoods.steamedhamsandwich.potlevel = "med"
 kynofoods.bubbletea.potlevel = "med"
@@ -292,6 +330,37 @@ kynofoods.gorge_bruschetta.potlevel = "med"
 kynofoods.gorge_hamburger.potlevel = "med"
 kynofoods.gorge_fishburger.potlevel = "med"
 kynofoods.gorge_mushroomburger.potlevel = "med"
+kynofoods.gorge_fish_steak.potlevel = "med"
+kynofoods.gorge_curry.potlevel = "med"
+kynofoods.gorge_spaghetti.potlevel = "med"
+kynofoods.gorge_poachedfish.potlevel = "med"
+kynofoods.gorge_shepherd_pie.potlevel = "med"
+kynofoods.gorge_candy.potlevel = "med"
+kynofoods.gorge_bread_pudding.potlevel = "med"
+kynofoods.gorge_berry_tart.potlevel = "med"
+kynofoods.gorge_macaroni.potlevel = "med"
+kynofoods.gorge_bagel_and_fish.potlevel = "med"
+kynofoods.gorge_grilled_cheese.potlevel = "low"
+kynofoods.gorge_creammushroom.potlevel = "med"
+kynofoods.gorge_manicotti.potlevel = "med"
+kynofoods.gorge_cheeseburger.potlevel = "med"
+kynofoods.gorge_fettuccine.potlevel = "med"
+kynofoods.gorge_onion_soup.potlevel = "med"
+kynofoods.gorge_breaded_cutlet.potlevel = "low"
+kynofoods.gorge_creamy_fish.potlevel = "med"
+kynofoods.gorge_pizza.potlevel = "med"
+kynofoods.gorge_pot_roast.potlevel = "med"
+kynofoods.gorge_crab_cake.potlevel = "med"
+kynofoods.gorge_steak_frites.potlevel = "med"
+kynofoods.gorge_shooter_sandwich.potlevel = "med"
+kynofoods.gorge_bacon_wrapped.potlevel = "med"
+kynofoods.gorge_crab_roll.potlevel = "med"
+kynofoods.gorge_meat_wellington.potlevel = "med"
+kynofoods.gorge_crab_ravioli.potlevel = "med"
+kynofoods.gorge_caramel_cube.potlevel = "med"
+kynofoods.gorge_scone.potlevel = "med"
+kynofoods.gorge_trifle.potlevel = "med"
+kynofoods.gorge_cheesecake.potlevel = "med"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Food On Stations.
 for name, recipe in pairs(kynofoods) do
@@ -428,7 +497,11 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"gorge_potato_pancakes", "gorge_potato_soup", "gorge_fishball_skewers", "gorge_meat_skewers", "gorge_stone_soup", "gorge_croquette", "gorge_roast_vegetables",
 	"gorge_meatloaf", "gorge_carrot_soup", "gorge_fishpie", "gorge_fishchips", "gorge_meatpie", "gorge_sliders", "gorge_jelly_roll", "gorge_carrot_cake", "gorge_garlicmashed",
 	"gorge_garlicbread", "gorge_tomato_soup", "gorge_sausage", "gorge_candiedfish", "gorge_stuffedmushroom", "gorge_bruschetta", "gorge_hamburger", "gorge_fishburger",
-	"gorge_mushroomburger", "kyno_white_cap", "kyno_white_cap_cooked"}) do
+	"gorge_mushroomburger", "kyno_white_cap", "kyno_white_cap_cooked", "gorge_fish_steak", "gorge_curry", "gorge_spaghetti", "gorge_poachedfish", "gorge_shepherd_pie",
+	"gorge_candy", "gorge_bread_pudding", "gorge_berry_tart", "gorge_macaroni", "gorge_bagel_and_fish", "gorge_grilled_cheese", "gorge_creammushroom", "gorge_manicotti",
+	"gorge_cheeseburger", "gorge_fettuccine", "gorge_onion_soup", "gorge_breaded_cutlet", "gorge_creamy_fish", "gorge_pizza", "gorge_pot_roast", "gorge_crab_cake",
+	"gorge_steak_frites", "gorge_shooter_sandwich", "gorge_bacon_wrapped", "gorge_crab_roll", "gorge_meat_wellington", "gorge_crab_ravioli", "gorge_caramel_cube",
+	"gorge_scone", "gorge_trifle", "gorge_cheesecake"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name

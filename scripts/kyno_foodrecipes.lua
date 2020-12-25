@@ -232,7 +232,6 @@ local kyno_foods =
 		hunger = 25,
 		sanity = -10,
 		cooktime = .5,
-		potlevel = "high",
 		floater = {"med", nil, 0.65},
 	},
 	
@@ -468,7 +467,8 @@ local kyno_foods =
 	
 	gorge_potato_chips = 
 	{
-		test = function(cooker, names, tags) return (names.potato or names.potato_cooked == 3) and names.kyno_spotspice and not (names.garlic or names.garlic_cooked) end,
+		test = function(cooker, names, tags) return (names.potato or names.potato_cooked == 3) and names.kyno_spotspice and not (names.garlic or names.garlic_cooked) 
+		and not tags.fish and not tags.meat end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_FAST,
@@ -523,7 +523,7 @@ local kyno_foods =
 	
 	gorge_onion_cake =
 	{
-		test = function(cooker, names, tags) return (names.onion or names.onion_cooked == 3) and names.kyno_flour end,
+		test = function(cooker, names, tags) return (names.onion or names.onion_cooked == 3) and names.kyno_flour and not tags.dairy end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -708,7 +708,8 @@ local kyno_foods =
 	
 	gorge_jelly_roll = 
 	{
-		test = function(cooker, names, tags) return (names.berries or names.berries_cooked or names.berries_juicy or names.berries_juicy_cooked == 3) and names.kyno_flour end,
+		test = function(cooker, names, tags) return (names.berries or names.berries_cooked or names.berries_juicy or names.berries_juicy_cooked == 3) and names.kyno_flour 
+		and not names.kyno_syrup and not tags.sweetener and not tags.dairy end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_FAST,
@@ -762,7 +763,8 @@ local kyno_foods =
 	
 	gorge_tomato_soup = 
 	{
-		test = function(cooker, names, tags) return (names.tomato or names.tomato_cooked == 3) and names.kyno_spotspice and not names.gorge_bread end,
+		test = function(cooker, names, tags) return (names.tomato or names.tomato_cooked == 3) and names.kyno_spotspice and not names.gorge_bread and not tags.meat 
+		and not tags.dairy end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -802,7 +804,8 @@ local kyno_foods =
 	
 	gorge_stuffedmushroom =
 	{
-		test = function(cooker, names, tags) return (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and tags.veggie and not names.foliage end,
+		test = function(cooker, names, tags) return (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and tags.veggie and not names.foliage
+		and not names.succulent_picked and not tags.dairy end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -864,6 +867,416 @@ local kyno_foods =
 		hunger = 62.5,
 		sanity = 30,
 		cooktime = .70,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_fish_steak =
+	{
+		test = function(cooker, names, tags) return names.fishmeat_cooked and names.foliage and names.kyno_spotspice and not names.fishmeat end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FAST,
+		health = 40,
+		hunger = 25,
+		sanity = 5,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_curry = 
+	{
+		test = function(cooker, names, tags) return tags.meat and tags.veggie and (names.kyno_spotspice == 2) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		secondaryfoodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 30,
+		hunger = 37.5,
+		sanity = 15,
+		cooktime = 2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_spaghetti =
+	{
+		test = function(cooker, names, tags) return tags.meat and names.kyno_flour and names.kyno_spotspice and (names.tomato or names.tomato_cooked) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_MED,
+		health = 10,
+		hunger = 75,
+		sanity = 20,
+		cooktime = 2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_poachedfish =
+	{
+		test = function(cooker, names, tags) return (tags.fish == 2) and names.foliage and names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FAST,
+		health = 40,
+		hunger = 25,
+		sanity = 25,
+		cooktime = 1.5,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_shepherd_pie =
+	{
+		test = function(cooker, names, tags) return tags.meat and (names.onion or names.onion_cooked) and (names.garlic or names.garlic_cooked) and names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 30,
+		hunger = 75,
+		sanity = 10,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_candy =
+	{
+		test = function(cooker, names, tags) return names.kyno_syrup and (tags.sweetener == 4) end,
+		priority = 35,
+		foodtype = FOODTYPE.GOODIES,
+		perishtime = TUNING.PERISH_SUPERSLOW,
+		health = -5,
+		hunger = 25,
+		sanity = 30,
+		cooktime = .75,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_bread_pudding = 
+	{
+		test = function(cooker, names, tags) return (names.berries or names.berries_cooked or names.berries_juicy or names.berries_juicy_cooked) and (names.kyno_flour == 2)
+		and names.kyno_syrup end,
+		priority = 20,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 15,
+		hunger = 40,
+		sanity = 20,
+		cooktime = 1.2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_berry_tart =
+	{
+		test = function(cooker, names, tags) return (names.berries or names.berries_cooked or names.berries_juicy or names.berries_juicy_cooked == 2) and names.kyno_flour
+		and tags.sweetener and not names.kyno_syrup end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 25,
+		hunger = 20,
+		sanity = 15,
+		cooktime = 1.2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_macaroni =
+	{
+		test = function(cooker, names, tags) return (names.kyno_flour == 2) and names.goatmilk and not tags.fish and not tags.meat and not names.gorge_bread and not tags.fruit end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_FAST,
+		health = 20,
+		hunger = 37.5,
+		sanity = 50,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_bagel_and_fish = 
+	{
+		test = function(cooker, names, tags) return names.gorge_bread and names.goatmilk and tags.fish and names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = 50,
+		hunger = 37.5,
+		sanity = 20,
+		cooktime = 2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_grilled_cheese =
+	{
+		test = function(cooker, names, tags) return names.gorge_bread and tags.dairy and not tags.fish and not tags.meat and not names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_FAST,
+		health = 30,
+		hunger = 62.5,
+		sanity = 25,
+		cooktime = 0.5,
+		potlevel = "low",
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_creammushroom = 
+	{
+		test = function(cooker, names, tags) return names.goatmilk and (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and names.succulent_picked and
+		not tags.meat and not tags.fish end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 30,
+		hunger = 25,
+		sanity = 33,
+		cooktime = .75,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_manicotti =
+	{
+		test = function(cooker, names, tags) return names.kyno_flour and names.goatmilk and names.kyno_spotspice and (names.tomato or names.tomato_cooked) end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 8,
+		hunger = 50,
+		sanity = 33,
+		cooktime = 1.5,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_cheeseburger =
+	{
+		test = function(cooker, names, tags) return names.gorge_bread and tags.meat and tags.dairy and names.foliage end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = 40,
+		hunger = 75,
+		sanity = 30,
+		cooktime = 1.2,
+		floater = {"med", nil, 0.65},
+		tags = {"masterfood"},
+	},
+	
+	gorge_fettuccine = 
+	{
+		test = function(cooker, names, tags) return names.kyno_flour and (names.garlic or names.garlic_cooked) and names.succulent_picked and tags.dairy end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 40,
+		hunger = 37.5,
+		sanity = 10,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_onion_soup =
+	{
+		test = function(cooker, names, tags) return names.kyno_flour and tags.dairy and (names.onion or names.onion_cooked == 2) end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 25,
+		hunger = 62.5,
+		sanity = -10,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_breaded_cutlet =
+	{
+		test = function(cooker, names, tags) return (tags.meat == 2) and (names.kyno_flour == 2) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 30,
+		hunger = 75,
+		sanity = 15,
+		potlevel = "low",
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_creamy_fish =
+	{
+		test = function(cooker, names, tags) return names.goatmilk and tags.veggie and tags.fish and names.kyno_spotspice and not names.gorge_bread end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FAST,
+		health = 40,
+		hunger = 75,
+		sanity = 20,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_pizza =
+	{
+		test = function(cooker, names, tags) return tags.meat and names.kyno_flour and tags.dairy and (names.tomato or names.tomato_cooked) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 40,
+		hunger = 150,
+		sanity = 20,
+		cooktime = 2.5,
+		floater = {"med", nil, 0.65},
+		tags = {"masterfood"},
+	},
+	
+	gorge_pot_roast =
+	{
+		test = function(cooker, names, tags) return (tags.meat == 2) and tags.veggie and names.kyno_spotspice and not (names.potato or names.potato_cooked) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_MED,
+		health = 30,
+		hunger = 150,
+		sanity = 5,
+		cooktime = 1.5,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_crab_cake = 
+	{
+		test = function(cooker, names, tags) return names.wobster_sheller_land and names.succulent_picked and names.kyno_flour and names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_MED,
+		health = 60,
+		hunger = 37.5,
+		sanity = 20,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_steak_frites =
+	{
+		test = function(cooker, names, tags) return (tags.meat == 2) and (names.potato or names.potato_cooked) and names.kyno_spotspice end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_MED,
+		health = 30,
+		hunger = 62.5,
+		sanity = 15,
+		cooktime = .75,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_shooter_sandwich =
+	{
+		test = function(cooker, names, tags) return tags.meat and names.gorge_bread and names.kyno_spotspice end, 
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 8,
+		hunger = 75,
+		sanity = 15,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_bacon_wrapped =
+	{
+		test = function(cooker, names, tags) return tags.meat and (names.kyno_bacon or names.kyno_bacon_cooked == 2) end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_MED,
+		health = 25,
+		hunger = 62.5,
+		sanity = 20,
+		cooktime = .75,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_crab_roll =
+	{
+		test = function(cooker, names, tags) return names.wobster_sheller_land and names.foliage and (names.kyno_white_cap or names.kyno_white_cap_cooked) and names.kyno_flour end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FAST,
+		health = 60,
+		hunger = 75,
+		sanity = 25,
+		cooktime = 2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_meat_wellington =
+	{
+		test = function(cooker, names, tags) return (tags.meat == 2) and names.gorge_bread and tags.veggie end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 40,
+		hunger = 62.5,
+		sanity = 15,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+		tags = {"masterfood"},
+	},
+	
+	gorge_crab_ravioli =
+	{
+		test = function(cooker, names, tags) return names.wobster_sheller_land and names.kyno_flour and tags.dairy and tags.veggie end,
+		priority = 35,
+		foodtype = FOODTYPE.MEAT,
+		perishtime = TUNING.PERISH_FAST,
+		health = 60,
+		hunger = 37.5,
+		sanity = 50,
+		cooktime = 1.5,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_caramel_cube =
+	{
+		test = function(cooker, names, tags) return (names.kyno_syrup == 2) and (tags.dairy == 2) end,
+		priority = 20,
+		foodtype = FOODTYPE.GOODIES,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = -25,
+		hunger = 37.5,
+		sanity = 100,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_scone =
+	{
+		test = function(cooker, names, tags) return tags.fruit and (names.kyno_flour == 2) and tags.dairy end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = 5,
+		hunger = 37.5,
+		sanity = 40,
+		cooktime = 0.5,
+		floater = {"med", nil, 0.65},
+	},
+	
+	gorge_trifle =
+	{
+		test = function(cooker, names, tags) return tags.fruit and names.kyno_flour and (tags.dairy == 2) end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = 15,
+		hunger = 37.5,
+		sanity = 60,
+		cooktime = 1,
+		floater = {"med", nil, 0.65},
+		tags = {"masterfood"},
+	},
+	
+	gorge_cheesecake =
+	{
+		test = function(cooker, names, tags) return (names.berries or names.berries_cooked or names.berries_juicy or names.berries_juicy_cooked == 2) and names.kyno_flour
+		and tags.dairy end,
+		priority = 20,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_FASTISH,
+		health = 20,
+		hunger = 75,
+		sanity = 25,
+		cooktime = 2,
 		floater = {"med", nil, 0.65},
 	},
 }

@@ -34,6 +34,8 @@ local function MakePreparedFood(data)
 		inst.entity:AddNetwork()
 
 		MakeInventoryPhysics(inst)
+		
+		inst.AnimState:SetScale(1.1, 1.1, 1.1) -- For foods on ground.
 
 		if spicename ~= nil then
 			inst.AnimState:SetBuild("plate_food")

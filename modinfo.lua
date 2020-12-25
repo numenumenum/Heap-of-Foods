@@ -1,8 +1,8 @@
 name = "Heap of Foods"
-version = "1.0-C (Beta)"
+version = "1.0-D (Beta)"
 local myupdate = "Restaurant Opening"
 
-description = "󰀄 Adds over 90+ new Crock Pot recipes alongside new ingredients to cook!\n\n󰀦 Recipe list on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
+description = "󰀄 Adds 88 new Crock Pot dishes alongside new ingredients to use!\n\n󰀦 Recipe list on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
 author = "Kyno"
 
 api_version = 10

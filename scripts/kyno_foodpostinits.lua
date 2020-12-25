@@ -47,9 +47,21 @@ AddPrefabPostInit("woodie", function(inst)
 	end
 end)
 
+AddPrefabPostInit("waxwell", function(inst)
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_crab_roll", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
+end)
+
 AddPrefabPostInit("wes", function(inst)
 	if inst.components.foodaffinity then
 		inst.components.foodaffinity:AddPrefabAffinity("sharkfinsoup", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
+end)
+
+AddPrefabPostInit("wathgrithr", function(inst)
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_pot_roast", TUNING.AFFINITY_15_CALORIES_HUGE)
 	end
 end)
 
@@ -80,6 +92,12 @@ end)
 AddPrefabPostInit("wurt", function(inst)
 	if inst.components.foodaffinity then
 		inst.components.foodaffinity:AddPrefabAffinity("gorge_vegetable_soup", TUNING.AFFINITY_15_CALORIES_HUGE)
+	end
+end)
+
+AddPrefabPostInit("walter", function(inst)
+	if inst.components.foodaffinity then
+		inst.components.foodaffinity:AddPrefabAffinity("gorge_hamburger", TUNING.AFFINITY_15_CALORIES_HUGE)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -186,14 +204,13 @@ AddPrefabPostInit("coffee_spice_salt", function(inst)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Ashes are Now a Fertilizer.
+-- Ashes are Now a Fertilizer. Also using the Nutrients of Manure as placeholder for now, check "ash.lua".
 local ACTIONS = GLOBAL.ACTIONS
 AddPrefabPostInit("ash", function(inst)
 	if not GLOBAL.TheWorld.ismastersim then
 		return inst
 	end
     inst:AddTag("coffeefertilizer")
-    -- inst:AddComponent("fertilizer")
 end)
 
 -- Coffee Plant can be Only Fertilized by Ashes.
