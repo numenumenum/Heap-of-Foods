@@ -11,10 +11,10 @@ dst_compatible = true
 all_clients_require_mod = true
 client_only_mod = false
 
-server_filter_tags = {"HOF", "Cooking", "Entertainment", "Kyno"}
+server_filter_tags = {"Heap of Foods", "HOF", "Cooking", "Entertainment", "Kyno"}
 
+icon = "ModiconHOF.tex"
 icon_atlas = "ModiconHOF.xml"
-icon = "ModiconHOOF.tex"
 
 configuration_options =
 {
