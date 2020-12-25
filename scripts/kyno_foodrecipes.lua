@@ -250,7 +250,7 @@ local kyno_foods =
 	
 	steamedhamsandwich = 
 	{
-		test = function(cooker, names, tags) return (names.meat or names.meat_cooked) and tags.veggie and names.foliage end,
+		test = function(cooker, names, tags) return (names.meat or names.meat_cooked == 2) and tags.veggie and names.foliage end,
 		priority = 5,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,
@@ -454,10 +454,10 @@ local kyno_foods =
 	
 	gorge_bread = 
 	{
-		test = function(cooker, names, tags) return (names.kyno_flour and names.kyno_flour == 3) end,
+		test = function(cooker, names, tags) return (names.kyno_flour and names.kyno_flour == 3 or (names.kyno_flour and names.kyno_flour == 4)) end,
 		priority = 1,
 		foodtype = FOODTYPE.VEGGIE,
-		perishtime = TUNING.PERISH_MED,
+		perishtime = TUNING.PERISH_SLOW,
 		health = 3,
 		hunger = 12.5,
 		sanity = 0,
@@ -628,7 +628,7 @@ local kyno_foods =
 	
 	gorge_meatloaf =
 	{
-		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and tags.veggie and not names.foliage end,
+		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and names.kyno_flour and tags.veggie and not names.foliage end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -777,7 +777,7 @@ local kyno_foods =
 	
 	gorge_sausage =
 	{
-		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 3) and names.kyno_spotspice end,
+		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 3) and names.kyno_spotspice and not tags.inedible end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -1123,7 +1123,7 @@ local kyno_foods =
 	
 	gorge_pot_roast =
 	{
-		test = function(cooker, names, tags) return (tags.meat == 2) and tags.veggie and names.kyno_spotspice and not (names.potato or names.potato_cooked) end,
+		test = function(cooker, names, tags) return (tags.meat == 2) and tags.veggie and names.kyno_spotspice and not (names.potato or names.potato_cooked) and not tags.fish end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -1162,7 +1162,7 @@ local kyno_foods =
 	
 	gorge_shooter_sandwich =
 	{
-		test = function(cooker, names, tags) return tags.meat and names.gorge_bread and names.kyno_spotspice end, 
+		test = function(cooker, names, tags) return tags.meat and names.gorge_bread and names.kyno_spotspice and not tags.fish end, 
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_SLOW,
@@ -1175,7 +1175,8 @@ local kyno_foods =
 	
 	gorge_bacon_wrapped =
 	{
-		test = function(cooker, names, tags) return tags.meat and (names.kyno_bacon or names.kyno_bacon_cooked == 2) end,
+		test = function(cooker, names, tags) return tags.meat and (names.kyno_bacon or names.kyno_bacon_cooked == 2) and not tags.inedible and not names.gorge_bread 
+		and not names.kyno_spotspice end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,

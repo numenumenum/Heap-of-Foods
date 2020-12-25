@@ -58,9 +58,9 @@ PrefabFiles =
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- New Crock Pot Ingredients.
-AddIngredientValues({"trunk_summer"}, {meat=2}, {trunk=1}, true)
-AddIngredientValues({"trunk_winter"}, {meat=2}, {trunk=1}, true)
-AddIngredientValues({"trunk_cooked"}, {meat=2}, {trunk=1}, true)
+AddIngredientValues({"trunk_summer"}, {meat=1}, {trunk=1}, true)
+AddIngredientValues({"trunk_winter"}, {meat=1}, {trunk=1}, true)
+AddIngredientValues({"trunk_cooked"}, {meat=1}, {trunk=1}, true)
 AddIngredientValues({"slurtle_shellpieces"}, {inedible=1}, {shell=1}, true)
 AddIngredientValues({"rabbit"}, {rabbit=1}, true)
 AddIngredientValues({"firenettles"}, {veggie=0.5}, true)
@@ -86,7 +86,7 @@ AddIngredientValues({"kyno_humanmeat"}, {meat=1}, {monster=1}, true, true)
 AddIngredientValues({"kyno_humanmeat_dried"}, {meat=1}, {monster=1}, true, true)
 AddIngredientValues({"kyno_syrup"}, {sweetener=1}, {syrup=1}, true)
 AddIngredientValues({"kyno_flour"}, {inedible=1}, {flour=1}, true)
-AddIngredientValues({"kyno_spotspice"}, {inedible=1}, {spotspice=1}, true)
+AddIngredientValues({"kyno_spotspice"}, {spotspice=1}, true)
 AddIngredientValues({"kyno_bacon"}, {meat=0.5}, {bacon=1}, true)
 AddIngredientValues({"kyno_bacon_cooked"}, {meat=0.5}, {bacon=1}, true)
 AddIngredientValues({"gorge_bread"}, {bread=1}, true)
@@ -97,7 +97,7 @@ AddIngredientValues({"kyno_white_cap_cooked"}, {veggie=0.5}, {mushroom=1}, true)
 AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Icons For Cookbook.
-RegisterInventoryItemAtlas("images/inventoryimages.xml", "slurtle_shellpieces.tex")
+RegisterInventoryItemAtlas("images/inventoryimages2.xml", "slurtle_shellpieces.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "rabbit.tex")
 RegisterInventoryItemAtlas("images/inventoryimages1.xml", "firenettles.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "foliage.tex")
