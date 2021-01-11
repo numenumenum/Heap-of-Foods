@@ -210,12 +210,12 @@ AddPrefabPostInit("ash", function(inst)
 	if not GLOBAL.TheWorld.ismastersim then
 		return inst
 	end
-    inst:AddTag("coffeefertilizer")
+    inst:AddTag("coffeefertilizer2")
 end)
 
 -- Coffee Plant can be Only Fertilized by Ashes.
 AddComponentAction("USEITEM", "fertilizer", function(inst, doer, target, actions)
-    if actions[1] == ACTIONS.FERTILIZE and inst:HasTag("coffeefertilizer") ~= target:HasTag("kyno_coffeebush") then
+    if actions[1] == ACTIONS.FERTILIZE and inst:HasTag("coffeefertilizer2") ~= target:HasTag("kyno_coffeebush") then
         actions[1] = nil
     end
 end)
@@ -260,7 +260,7 @@ AddPrefabPostInit("puffin", function(inst)
 	if inst.components.periodicspawner ~= nil then
 		inst.components.periodicspawner:SetPrefab("kyno_roe")
 		inst.components.periodicspawner:SetDensityInRange(20, 2)
-		inst.components.periodicspawner:SetMinimumSpacing(3)
+		inst.components.periodicspawner:SetMinimumSpacing(8)
 	end
 end)
 
@@ -268,7 +268,7 @@ AddPrefabPostInit("robin_winter", function(inst)
 	if inst.components.periodicspawner ~= nil then
 		inst.components.periodicspawner:SetPrefab("kyno_roe")
 		inst.components.periodicspawner:SetDensityInRange(20, 2)
-		inst.components.periodicspawner:SetMinimumSpacing(3)
+		inst.components.periodicspawner:SetMinimumSpacing(8)
 	end
 end)
 
@@ -276,7 +276,7 @@ AddPrefabPostInit("canary", function(inst)
 	if inst.components.periodicspawner ~= nil then
 		inst.components.periodicspawner:SetPrefab("kyno_roe")
 		inst.components.periodicspawner:SetDensityInRange(20, 2)
-		inst.components.periodicspawner:SetMinimumSpacing(3)
+		inst.components.periodicspawner:SetMinimumSpacing(8)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

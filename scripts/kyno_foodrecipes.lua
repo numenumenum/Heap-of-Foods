@@ -250,12 +250,12 @@ local kyno_foods =
 	
 	steamedhamsandwich = 
 	{
-		test = function(cooker, names, tags) return (names.meat or names.meat_cooked == 2) and tags.veggie and names.foliage end,
+		test = function(cooker, names, tags) return (names.meat or names.meat_cooked == 2) and names.foliage and names.kelp end,
 		priority = 5,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,
 		health = 40,
-		hunger = 37.5,
+		hunger = 62.5,
 		sanity = 15,
 		cooktime = 2,
 		floater = {"med", nil, 0.65},

@@ -98,14 +98,12 @@ local function syrupfn()
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable.onperishreplacement = "spoiled_food"
 	
-	--[[
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = 3
 	inst.components.edible.hungervalue = 9.375
 	inst.components.edible.sanityvalue = 0
 	inst.components.edible.foodtype = FOODTYPE.GOODIES
-	]]--
-	
+
 	MakeHauntableLaunchAndPerish(inst)
 
     return inst
@@ -127,6 +125,8 @@ local function sprigfn()
 
 	inst:AddTag("gourmet_sprig")
 	inst:AddTag("gourmet_ingredient")
+	inst:AddTag("show_spoilage")
+	inst:AddTag("veggie")
 
     inst.entity:SetPristine()
 
@@ -139,7 +139,7 @@ local function sprigfn()
 
     inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
-	inst.components.inventoryitem.imagename = "kyno_sprig"
+	inst.components.inventoryitem.imagename = "kyno_spotspice_leaf"
 	
     inst:AddComponent("stackable")
 	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
@@ -148,6 +148,12 @@ local function sprigfn()
 	inst.components.perishable:SetPerishTime(TUNING.PERISH_MED)
 	inst.components.perishable:StartPerishing()
 	inst.components.perishable.onperishreplacement = "spoiled_food"
+	
+	inst:AddComponent("edible")
+	inst.components.edible.healthvalue = 0
+	inst.components.edible.hungervalue = 4.6875
+	inst.components.edible.sanityvalue = 0
+	inst.components.edible.foodtype = FOODTYPE.SEEDS
 	
 	MakeSmallBurnable(inst)
 	MakeSmallPropagator(inst)
@@ -427,7 +433,7 @@ local function mush_cookedfn()
 end
 
 return Prefab("kyno_flour", flourfn, assets, prefabs),
--- Prefab("kyno_sprig", sprigfn, assets, prefabs),
+Prefab("kyno_spotspice_leaf", sprigfn, assets, prefabs),
 Prefab("kyno_spotspice", spicefn, assets, prefabs),
 Prefab("kyno_syrup", syrupfn, assets, prefabs),
 Prefab("kyno_bacon", baconfn, assets, prefabs),

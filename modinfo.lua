@@ -1,6 +1,6 @@
-name = "Heap of Foods"
-version = "1.0-A"
-local myupdate = "Restaurant Opening"
+name = "Heap of Foods BETA"
+version = "1.4-A"
+local myupdate = "Whe-whe-wheat!"
 
 description = "󰀄 Adds 88 brand new Crock Pot dishes alongside new ingredients to use!\n\n󰀦 Guide on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
 author = "Kyno"

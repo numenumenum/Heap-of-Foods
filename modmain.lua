@@ -20,12 +20,16 @@ Assets =
 {	
 	Asset("ANIM", "anim/kyno_humanmeat.zip"),
 	Asset("ANIM", "anim/kyno_mushroomstump.zip"),
+	Asset("ANIM", "anim/kyno_spotbush.zip"),
 
 	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
 	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
 	
 	Asset("IMAGE", "images/inventoryimages/kyno_mushroomstump.tex"),
 	Asset("ATLAS", "images/inventoryimages/kyno_mushroomstump.xml"),
+	
+	Asset("IMAGE", "images/inventoryimages/kyno_spotbush.tex"),
+	Asset("ATLAS", "images/inventoryimages/kyno_spotbush.xml"),
 	
 	Asset("IMAGE", "images/cookbookimages/kyno_cookbook.tex"),
 	Asset("ATLAS", "images/cookbookimages/kyno_cookbook.xml"),
@@ -54,6 +58,8 @@ PrefabFiles =
 	"k_humanmeat",
 	"k_gourmetingredients",
 	"k_mushstump",
+	"k_spotbush",
+	"k_dugspotbush",
 	"ash",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -133,21 +139,26 @@ RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_w
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Ingredient Recipes.
 local KynFlour = AddRecipe("kyno_flour", {Ingredient("seeds", 1), Ingredient("cutgrass", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
 
-local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("foliage", 1), Ingredient("garlic", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
+local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("kyno_spotspice_leaf", 1, "images/inventoryimages/kyno_foodimages.xml")},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
-local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 3)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
+local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 9)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
 
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
 
 local KynMusher = AddRecipe("kyno_mushstump", {Ingredient("spoiled_food", 4), Ingredient("poop", 3), Ingredient("livinglog", 2)},
-RECIPETABS.FARM, TECH.LOST, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")
+RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")
 local musher_sortkey = AllRecipes["mushroom_farm"]["sortkey"]
 KynMusher.sortkey = musher_sortkey + 0.1
+
+local KynSpott = AddRecipe("dug_kyno_spotbush", {Ingredient("dug_berrybush", 1), Ingredient("pepper", 1)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages/kyno_spotbush.xml", "kyno_spotbush.tex")
+local spott_sortkey = AllRecipes["kyno_mushstump"]["sortkey"]
+KynSpott.sortkey = spott_sortkey + 0.1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -501,7 +512,7 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"gorge_candy", "gorge_bread_pudding", "gorge_berry_tart", "gorge_macaroni", "gorge_bagel_and_fish", "gorge_grilled_cheese", "gorge_creammushroom", "gorge_manicotti",
 	"gorge_cheeseburger", "gorge_fettuccine", "gorge_onion_soup", "gorge_breaded_cutlet", "gorge_creamy_fish", "gorge_pizza", "gorge_pot_roast", "gorge_crab_cake",
 	"gorge_steak_frites", "gorge_shooter_sandwich", "gorge_bacon_wrapped", "gorge_crab_roll", "gorge_meat_wellington", "gorge_crab_ravioli", "gorge_caramel_cube",
-	"gorge_scone", "gorge_trifle", "gorge_cheesecake"}) do
+	"gorge_scone", "gorge_trifle", "gorge_cheesecake", "robin_winter", "gears", "rocks", "petals", "foliage", "rabbit", "succulent_picked", "kyno_dug_spotbush", "kyno_spotspice_leaf"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name
