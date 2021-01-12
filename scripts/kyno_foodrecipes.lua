@@ -250,7 +250,7 @@ local kyno_foods =
 	
 	steamedhamsandwich = 
 	{
-		test = function(cooker, names, tags) return (names.meat or names.meat_cooked == 2) and names.foliage and names.kelp end,
+		test = function(cooker, names, tags) return (names.meat or names.meat_cooked == 2) and (names.foliage or names.kyno_foliage_cooked) and (names.kelp or names.kelp_cooked) end,
 		priority = 5,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,
@@ -294,7 +294,7 @@ local kyno_foods =
 	
 	frenchonionsoup = 
 	{
-		test = function(cooker, names, tags) return (names.onion or names.onion_cooked == 2) and tags.veggie and names.foliage end,
+		test = function(cooker, names, tags) return (names.onion or names.onion_cooked == 2) and tags.veggie and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 5,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -309,7 +309,7 @@ local kyno_foods =
 	slaw = 
 	{
 		test = function(cooker, names, tags) return (names.onion or names.onion_cooked) and (names.garlic or names.garlic_cooked) and 
-		(names.potato or names.potato_cooked) and names.foliage end,
+		(names.potato or names.potato_cooked) and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 20,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -323,7 +323,7 @@ local kyno_foods =
 	
 	lotusbowl = 
 	{
-		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and tags.veggie and not names.foliage end,
+		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and tags.veggie and not (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 30,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_FASTISH,
@@ -336,7 +336,7 @@ local kyno_foods =
 	
 	poi = 
 	{
-		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and (names.foliage == 2) end,
+		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and (names.foliage or names.kyno_foliage_cooked == 2) end,
 		priority = 30,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_FASTISH,
@@ -482,7 +482,7 @@ local kyno_foods =
 	gorge_vegetable_soup =
 	{
 		test = function(cooker, names, tags) return (names.carrot or names.carrot_cooked) and (names.onion or names.onion_cooked) and
-		(names.corn or names.corn_cooked) and names.foliage and not (names.potato or names.potato_cooked) end,
+		(names.corn or names.corn_cooked) and (names.foliage or names.kyno_foliage_cooked) and not (names.potato or names.potato_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_SLOW,
@@ -628,7 +628,7 @@ local kyno_foods =
 	
 	gorge_meatloaf =
 	{
-		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and names.kyno_flour and tags.veggie and not names.foliage end,
+		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and names.kyno_flour and tags.veggie and not (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -695,7 +695,7 @@ local kyno_foods =
 	
 	gorge_sliders = 
 	{
-		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and names.kyno_flour and names.foliage end,
+		test = function(cooker, names, tags) return (names.kyno_bacon or names.kyno_bacon_cooked == 2) and names.kyno_flour and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
@@ -804,7 +804,7 @@ local kyno_foods =
 	
 	gorge_stuffedmushroom =
 	{
-		test = function(cooker, names, tags) return (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and tags.veggie and not names.foliage
+		test = function(cooker, names, tags) return (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and tags.veggie and not (names.foliage or names.kyno_foliage_cooked)
 		and not names.succulent_picked and not tags.dairy end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
@@ -832,7 +832,7 @@ local kyno_foods =
 	
 	gorge_hamburger =
 	{
-		test = function(cooker, names, tags) return names.gorge_bread and tags.meat and (names.kyno_bacon or names.kyno_bacon_cooked) and names.foliage
+		test = function(cooker, names, tags) return names.gorge_bread and tags.meat and (names.kyno_bacon or names.kyno_bacon_cooked) and (names.foliage or names.kyno_foliage_cooked)
 		and not tags.fish end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
@@ -846,7 +846,7 @@ local kyno_foods =
 	
 	gorge_fishburger =
 	{
-		test = function(cooker, names, tags) return names.gorge_bread and tags.fish and (names.kyno_bacon or names.kyno_bacon_cooked) and names.foliage end,
+		test = function(cooker, names, tags) return names.gorge_bread and tags.fish and (names.kyno_bacon or names.kyno_bacon_cooked) and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FASTISH,
@@ -859,7 +859,7 @@ local kyno_foods =
 	
 	gorge_mushroomburger =
 	{
-		test = function(cooker, names, tags) return names.gorge_bread and (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and names.foliage end,
+		test = function(cooker, names, tags) return names.gorge_bread and (names.kyno_white_cap or names.kyno_white_cap_cooked == 2) and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -872,7 +872,7 @@ local kyno_foods =
 	
 	gorge_fish_steak =
 	{
-		test = function(cooker, names, tags) return names.fishmeat_cooked and names.foliage and names.kyno_spotspice and not names.fishmeat end,
+		test = function(cooker, names, tags) return names.fishmeat_cooked and (names.foliage or names.kyno_foliage_cooked) and names.kyno_spotspice and not names.fishmeat end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,
@@ -912,7 +912,7 @@ local kyno_foods =
 	
 	gorge_poachedfish =
 	{
-		test = function(cooker, names, tags) return (tags.fish == 2) and names.foliage and names.kyno_spotspice end,
+		test = function(cooker, names, tags) return (tags.fish == 2) and (names.foliage or names.kyno_foliage_cooked) and names.kyno_spotspice end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,
@@ -1046,7 +1046,7 @@ local kyno_foods =
 	
 	gorge_cheeseburger =
 	{
-		test = function(cooker, names, tags) return names.gorge_bread and tags.meat and tags.dairy and names.foliage end,
+		test = function(cooker, names, tags) return names.gorge_bread and tags.meat and tags.dairy and (names.foliage or names.kyno_foliage_cooked) end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FASTISH,
@@ -1189,7 +1189,8 @@ local kyno_foods =
 	
 	gorge_crab_roll =
 	{
-		test = function(cooker, names, tags) return names.wobster_sheller_land and names.foliage and (names.kyno_white_cap or names.kyno_white_cap_cooked) and names.kyno_flour end,
+		test = function(cooker, names, tags) return names.wobster_sheller_land and (names.foliage or names.kyno_foliage_cooked) and (names.kyno_white_cap or names.kyno_white_cap_cooked) 
+		and names.kyno_flour end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_FAST,

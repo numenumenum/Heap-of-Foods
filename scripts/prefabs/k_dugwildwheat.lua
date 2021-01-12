@@ -1,10 +1,5 @@
 require "prefabutil"
 
-local function makeemptyfn(inst)
-    inst.AnimState:PlayAnimation("empty")
-	inst.components.pickable:MakeEmpty()
-end
-
 local function ondeploy(inst, pt, deployer)
 local tree = SpawnPrefab(data.name)
 	if tree ~= nil then
@@ -12,7 +7,6 @@ local tree = SpawnPrefab(data.name)
 		inst.components.stackable:Get():Remove()
 	if tree.components.pickable ~= nil then
 		tree.components.pickable:OnTransplant()
-		tree.components.pickable.makeemptyfn = makeemptyfn
 	end
 	if deployer ~= nil and deployer.SoundEmitter ~= nil then
 		deployer.SoundEmitter:PlaySound("dontstarve/common/plant")
@@ -24,9 +18,6 @@ local function make_plantable(data)
     local assets =
     {
 		Asset("ANIM", "anim/"..data.bank..".zip"),
-		
-		Asset("IMAGE", "images/inventoryimages/kyno_spotbush.tex"),
-		Asset("ATLAS", "images/inventoryimages/kyno_spotbush.xml"),
 		
 		Asset("IMAGE", "images/inventoryimages/kyno_foodimages.tex"),
 		Asset("ATLAS", "images/inventoryimages/kyno_foodimages.xml"),
@@ -105,14 +96,12 @@ local function make_plantable(data)
         inst.entity:AddNetwork()
 
         MakeInventoryPhysics(inst)
-		
-		inst.AnimState:SetScale(1.4, 1.4, 1.4)
 
-        inst.AnimState:SetBank("kyno_spotbush")
-        inst.AnimState:SetBuild("kyno_spotbush")
+        inst.AnimState:SetBank("kyno_wheat")
+        inst.AnimState:SetBuild("kyno_wheat")
         inst.AnimState:PlayAnimation("dropped")
 		
-		inst:AddTag("spotbush")
+		inst:AddTag("wildwheat")
 
         inst.entity:SetPristine()
 
@@ -124,10 +113,11 @@ local function make_plantable(data)
         inst.components.stackable.maxsize = TUNING.STACK_SIZE_LARGEITEM
 
         inst:AddComponent("inspectable")
+		inst.components.inspectable.nameoverride = "DUG_GRASS"
         
         inst:AddComponent("inventoryitem")
 		inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
-		inst.components.inventoryitem.imagename = "dug_kyno_spotbush"
+		inst.components.inventoryitem.imagename = "dug_kyno_wildwheat"
 
         inst:AddComponent("fuel")
         inst.components.fuel.fuelvalue = TUNING.LARGE_FUEL
@@ -147,7 +137,7 @@ end
 
 local plantables =
 {
-	{name="kyno_spotbush", bank = "kyno_spotbush", build = "kyno_spotbush", mediumspacing = true},
+	{name="kyno_wildwheat", bank = "kyno_wheat", build = "kyno_wheat", mediumspacing = true},
 }
 
 local prefabs = {}

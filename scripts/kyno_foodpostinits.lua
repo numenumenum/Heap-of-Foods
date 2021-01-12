@@ -374,3 +374,184 @@ AddPrefabPostInit("walter", function(inst)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Pig King trades Berry Bushes for Spotty Shrubs and Grass Tufts for Wheat Saplings.
+local function BushTrader(inst)	
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("The Architect Pack") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "dug_kyno_spotbush" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "dug_kyno_spotbush" }
+	end
+end
+
+local function WheatTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("The Architect Pack") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "dug_kyno_wildwheat" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "dug_kyno_wildwheat" }
+	end
+end
+
+AddPrefabPostInit("dug_berrybush", BushTrader)
+AddPrefabPostInit("dug_berrybush2", BushTrader)
+AddPrefabPostInit("dug_berrybush_juicy", BushTrader)
+AddPrefabPostInit("dug_grass", WheatTrader)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Evergreens drops Sap when chopped.
+AddPrefabPostInit("evergreen_normal", function(inst)
+	if GLOBAL.TheWorld.ismastersim then
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
+	end
+end)
+
+AddPrefabPostInit("evergreen_tall", function(inst)
+	if GLOBAL.TheWorld.ismastersim then
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00)
+	end
+end)
+
+AddPrefabPostInit("evergreen_sparse_normal", function(inst)
+	if GLOBAL.TheWorld.ismastersim then
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
+	end
+end)
+
+AddPrefabPostInit("evergreen_sparse_tall", function(inst)
+	if GLOBAL.TheWorld.ismastersim then
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
+		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00)
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Foliage can be cooked into Cooked Foliage.
+AddPrefabPostInit("foliage", function(inst)
+	inst:AddTag("cookable")
+	
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	inst:AddComponent("cookable")
+	inst.components.cookable.product = "kyno_foliage_cooked"
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Mod Options.
+-- Prevent Food From Spoiling In Stations.
+local KEEP_FOOD_K = GetModConfigData("keep_food_spoilage_k")
+if KEEP_FOOD_K == 1 then
+    AddPrefabPostInit("cookpot", function(inst)
+        if inst.components.stewer then
+            inst.components.stewer.onspoil = function() 
+                inst.components.stewer.spoiltime = 1
+                inst.components.stewer.targettime = GLOBAL.GetTime()
+                inst.components.stewer.product_spoilage = 0
+            end
+        end
+    end)
+	AddPrefabPostInit("archive_cookpot", function(inst)
+        if inst.components.stewer then
+            inst.components.stewer.onspoil = function() 
+                inst.components.stewer.spoiltime = 1
+                inst.components.stewer.targettime = GLOBAL.GetTime()
+                inst.components.stewer.product_spoilage = 0
+            end
+        end
+    end)
+	AddPrefabPostInit("portablecookpot", function(inst)
+        if inst.components.stewer then
+            inst.components.stewer.onspoil = function() 
+                inst.components.stewer.spoiltime = 1
+                inst.components.stewer.targettime = GLOBAL.GetTime()
+                inst.components.stewer.product_spoilage = 0
+            end
+        end
+    end)
+	AddPrefabPostInit("portablespicer", function(inst)
+        if inst.components.stewer then
+            inst.components.stewer.onspoil = function() 
+                inst.components.stewer.spoiltime = 1
+                inst.components.stewer.targettime = GLOBAL.GetTime()
+                inst.components.stewer.product_spoilage = 0
+            end
+        end
+    end)
+end
+
+-- Dragonfly Drops Coffee Plants.
+local DF_COFFEE = GetModConfigData("df_coffee")
+if DF_COFFEE == 0 then
+	AddPrefabPostInit("dragonfly", function(inst)
+		if GLOBAL.TheWorld.ismastersim then
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+		end
+	end)
+elseif DF_COFFEE == 1 then
+	AddPrefabPostInit("dragonfly", function(inst)
+		if GLOBAL.TheWorld.ismastersim then
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+		end
+	end)
+elseif DF_COFFEE == 2 then
+	AddPrefabPostInit("dragonfly", function(inst)
+		if GLOBAL.TheWorld.ismastersim then
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+		end
+	end)
+elseif DF_COFFEE == 3 then
+	AddPrefabPostInit("dragonfly", function(inst)
+		if GLOBAL.TheWorld.ismastersim then
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
+			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
+		end
+	end)
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

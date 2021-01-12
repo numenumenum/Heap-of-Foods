@@ -9,7 +9,6 @@ local Recipe = GLOBAL.Recipe
 -- Mod Dependencies.
 modimport("scripts/kyno_foodstrings")
 modimport("scripts/kyno_foodpostinits")
--- Fix for Custom Foods on Drying Rack.
 modimport("scripts/kyno_meatrackfix")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Inventory Icons.
@@ -21,6 +20,7 @@ Assets =
 	Asset("ANIM", "anim/kyno_humanmeat.zip"),
 	Asset("ANIM", "anim/kyno_mushroomstump.zip"),
 	Asset("ANIM", "anim/kyno_spotbush.zip"),
+	Asset("ANIM", "anim/kyno_wheat.zip"),
 
 	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
 	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
@@ -60,6 +60,8 @@ PrefabFiles =
 	"k_mushstump",
 	"k_spotbush",
 	"k_dugspotbush",
+	"k_wildwheat",
+	"k_dugwildwheat",
 	"ash",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -98,6 +100,8 @@ AddIngredientValues({"kyno_bacon_cooked"}, {meat=0.5}, {bacon=1}, true)
 AddIngredientValues({"gorge_bread"}, {bread=1}, true)
 AddIngredientValues({"kyno_white_cap"}, {veggie=0.5}, {mushroom=1}, true)
 AddIngredientValues({"kyno_white_cap_cooked"}, {veggie=0.5}, {mushroom=1}, true)
+AddIngredientValues({"kyno_foliage"}, {veggie=0.5}, true) -- This is a false Foliage. We just need it because Cooked Foliage icon doesn't display without it.
+AddIngredientValues({"kyno_foliage_cooked"}, {veggie=0.5}, true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Minimap Icons.
 AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
@@ -136,15 +140,17 @@ RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_b
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "gorge_bread.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_white_cap.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_white_cap_cooked.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage_cooked.tex")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Ingredient Recipes.
-local KynFlour = AddRecipe("kyno_flour", {Ingredient("seeds", 1), Ingredient("cutgrass", 1)},
+-- Ingredient and Structures Recipes.
+local KynFlour = AddRecipe("kyno_flour", {Ingredient("kyno_wheat", 2, "images/inventoryimages/kyno_foodimages.xml")},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
 
-local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("kyno_spotspice_leaf", 1, "images/inventoryimages/kyno_foodimages.xml")},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 2, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
+local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("kyno_spotspice_leaf", 2, "images/inventoryimages/kyno_foodimages.xml")},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
-local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("honey", 9)},
+local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("kyno_sap", 2, "images/inventoryimages/kyno_foodimages.xml")},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
 
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
@@ -154,11 +160,6 @@ local KynMusher = AddRecipe("kyno_mushstump", {Ingredient("spoiled_food", 4), In
 RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")
 local musher_sortkey = AllRecipes["mushroom_farm"]["sortkey"]
 KynMusher.sortkey = musher_sortkey + 0.1
-
-local KynSpott = AddRecipe("dug_kyno_spotbush", {Ingredient("dug_berrybush", 1), Ingredient("pepper", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages/kyno_spotbush.xml", "kyno_spotbush.tex")
-local spott_sortkey = AllRecipes["kyno_mushstump"]["sortkey"]
-KynSpott.sortkey = spott_sortkey + 0.1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -391,111 +392,6 @@ for name, recipe in pairs(kynofoods) do
 	end
 end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Prevent Food From Spoiling In Stations.
-local KEEP_FOOD_K = GetModConfigData("keep_food_spoilage_k")
-if KEEP_FOOD_K == 1 then
-    AddPrefabPostInit("cookpot", function(inst)
-        if inst.components.stewer then
-            inst.components.stewer.onspoil = function() 
-                inst.components.stewer.spoiltime = 1
-                inst.components.stewer.targettime = GLOBAL.GetTime()
-                inst.components.stewer.product_spoilage = 0
-            end
-        end
-    end)
-	AddPrefabPostInit("archive_cookpot", function(inst)
-        if inst.components.stewer then
-            inst.components.stewer.onspoil = function() 
-                inst.components.stewer.spoiltime = 1
-                inst.components.stewer.targettime = GLOBAL.GetTime()
-                inst.components.stewer.product_spoilage = 0
-            end
-        end
-    end)
-	AddPrefabPostInit("portablecookpot", function(inst)
-        if inst.components.stewer then
-            inst.components.stewer.onspoil = function() 
-                inst.components.stewer.spoiltime = 1
-                inst.components.stewer.targettime = GLOBAL.GetTime()
-                inst.components.stewer.product_spoilage = 0
-            end
-        end
-    end)
-	AddPrefabPostInit("portablespicer", function(inst)
-        if inst.components.stewer then
-            inst.components.stewer.onspoil = function() 
-                inst.components.stewer.spoiltime = 1
-                inst.components.stewer.targettime = GLOBAL.GetTime()
-                inst.components.stewer.product_spoilage = 0
-            end
-        end
-    end)
-end
-
--- Dragonfly Drops Coffee Plants.
-local DF_COFFEE = GetModConfigData("df_coffee")
-if DF_COFFEE == 0 then
-	AddPrefabPostInit("dragonfly", function(inst)
-		if GLOBAL.TheWorld.ismastersim then
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-		end
-	end)
-elseif DF_COFFEE == 1 then
-	AddPrefabPostInit("dragonfly", function(inst)
-		if GLOBAL.TheWorld.ismastersim then
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-		end
-	end)
-elseif DF_COFFEE == 2 then
-	AddPrefabPostInit("dragonfly", function(inst)
-		if GLOBAL.TheWorld.ismastersim then
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-		end
-	end)
-elseif DF_COFFEE == 3 then
-	AddPrefabPostInit("dragonfly", function(inst)
-		if GLOBAL.TheWorld.ismastersim then
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00) 
-			inst.components.lootdropper:AddChanceLoot("dug_kyno_coffeebush", 1.00)
-		end
-	end)
-end
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Inventory Icons.
 if GLOBAL.TheNet:GetIsMasterSimulation() then
     local foods_atlas = MODROOT.."images/inventoryimages/kyno_foodimages.xml"
@@ -512,7 +408,8 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"gorge_candy", "gorge_bread_pudding", "gorge_berry_tart", "gorge_macaroni", "gorge_bagel_and_fish", "gorge_grilled_cheese", "gorge_creammushroom", "gorge_manicotti",
 	"gorge_cheeseburger", "gorge_fettuccine", "gorge_onion_soup", "gorge_breaded_cutlet", "gorge_creamy_fish", "gorge_pizza", "gorge_pot_roast", "gorge_crab_cake",
 	"gorge_steak_frites", "gorge_shooter_sandwich", "gorge_bacon_wrapped", "gorge_crab_roll", "gorge_meat_wellington", "gorge_crab_ravioli", "gorge_caramel_cube",
-	"gorge_scone", "gorge_trifle", "gorge_cheesecake", "robin_winter", "gears", "rocks", "petals", "foliage", "rabbit", "succulent_picked", "kyno_dug_spotbush", "kyno_spotspice_leaf"}) do
+	"gorge_scone", "gorge_trifle", "gorge_cheesecake", "robin_winter", "gears", "rocks", "petals", "foliage", "rabbit", "succulent_picked", "dug_kyno_spotbush", "kyno_spotspice_leaf",
+	"kyno_wheat", "kyno_wheat_cooked", "kyno_sap", "kyno_sap_spoiled", "kyno_foliage", "kyno_foliage_cooked", "dug_kyno_wildwheat"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name
