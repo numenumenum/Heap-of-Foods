@@ -4,6 +4,9 @@ local assets =
     Asset("ANIM", "anim/grass1.zip"),
 	Asset("ANIM", "anim/kyno_wheat.zip"),
     Asset("SOUND", "sound/common.fsb"),
+	
+	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
+	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
 }
 
 local grasspart_assets =
@@ -90,7 +93,7 @@ local function grass(name, stage)
         inst.entity:AddNetwork()
 	
 		local minimap = inst.entity:AddMiniMapEntity()
-        minimap:SetIcon("grass.png")
+        minimap:SetIcon("kyno_wildwheat.tex")
 
         inst.AnimState:SetBank("kyno_wheat")
         inst.AnimState:SetBuild("kyno_wheat")

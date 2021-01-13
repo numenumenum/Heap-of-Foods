@@ -765,7 +765,7 @@ Prefab("kyno_spotspice_leaf", sprigfn, assets, prefabs),
 Prefab("kyno_spotspice", spicefn, assets, prefabs),
 Prefab("kyno_sap", sapfn, assets, prefabs),
 Prefab("kyno_sap_spoiled", sap_ruinedfn, assets, prefabs),
-Prefab("kyno_syrup", syrupfn, assets, prefabs),
+-- Prefab("kyno_syrup", syrupfn, assets, prefabs), Check "modmain.lua" for more info.
 Prefab("kyno_bacon", baconfn, assets, prefabs),
 Prefab("kyno_bacon_cooked", bacon_cookedfn, assets),
 Prefab("kyno_white_cap", mushfn, assets),

@@ -25,8 +25,14 @@ Assets =
 	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
 	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
 	
+	Asset("IMAGE", "images/tabimages/kyno_mealingtab.tex"),
+	Asset("ATLAS", "images/tabimages/kyno_mealingtab.xml"),
+	
 	Asset("IMAGE", "images/inventoryimages/kyno_mushroomstump.tex"),
 	Asset("ATLAS", "images/inventoryimages/kyno_mushroomstump.xml"),
+	
+	Asset("IMAGE", "images/inventoryimages/kyno_mealgrinder.tex"),
+	Asset("ATLAS", "images/inventoryimages/kyno_mealgrinder.xml"),
 	
 	Asset("IMAGE", "images/inventoryimages/kyno_spotbush.tex"),
 	Asset("ATLAS", "images/inventoryimages/kyno_spotbush.xml"),
@@ -62,6 +68,7 @@ PrefabFiles =
 	"k_dugspotbush",
 	"k_wildwheat",
 	"k_dugwildwheat",
+	"k_mealgrinder",
 	"ash",
 }
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -102,6 +109,7 @@ AddIngredientValues({"kyno_white_cap"}, {veggie=0.5}, {mushroom=1}, true)
 AddIngredientValues({"kyno_white_cap_cooked"}, {veggie=0.5}, {mushroom=1}, true)
 AddIngredientValues({"kyno_foliage"}, {veggie=0.5}, true) -- This is a false Foliage. We just need it because Cooked Foliage icon doesn't display without it.
 AddIngredientValues({"kyno_foliage_cooked"}, {veggie=0.5}, true)
+AddIngredientValues({"kyno_sap"}, {inedible=1}, {sap=1}, true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Minimap Icons.
 AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
@@ -142,24 +150,67 @@ RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_w
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_white_cap_cooked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage_cooked.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_sap.tex")
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Custom TechTree for Mealing Stone.
+local TechTree = require("techtree")
+table.insert(TechTree.AVAILABLE_TECH, "MEALING")
+
+TechTree.Create = function(t)
+	t = t or {}
+	for i, v in ipairs(TechTree.AVAILABLE_TECH) do
+	    t[v] = t[v] or 0
+	end
+	return t
+end
+
+GLOBAL.TECH.NONE.MEALING = 0
+GLOBAL.TECH.MEALING_ONE = { MEALING = 1 }
+GLOBAL.TECH.MEALING_TWO = { MEALING = 2 }
+
+for k,v in pairs(TUNING.PROTOTYPER_TREES) do
+    v.MEALING = 0
+end
+
+TUNING.PROTOTYPER_TREES.MEALING_ONE = TechTree.Create({
+    MEALING = 1,
+})
+TUNING.PROTOTYPER_TREES.MEALING_TWO = TechTree.Create({
+	MEALING = 2,
+})
+
+for i, v in pairs(GLOBAL.AllRecipes) do
+	if v.level.MEALING == nil then
+		v.level.MEALING = 0
+	end
+end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Custom Recipe Tab for the new ingredients.
+local MEALINGTAB = AddRecipeTab("Grinding", 998, "images/tabimages/kyno_mealingtab.xml", "kyno_mealingtab.tex", nil, true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Ingredient and Structures Recipes.
 local KynFlour = AddRecipe("kyno_flour", {Ingredient("kyno_wheat", 2, "images/inventoryimages/kyno_foodimages.xml")},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
+MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_flour.tex")
 
 local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("kyno_spotspice_leaf", 2, "images/inventoryimages/kyno_foodimages.xml")},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
+MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
-local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("kyno_sap", 2, "images/inventoryimages/kyno_foodimages.xml")},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 3, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
+-- Maple Syrup is now a crock pot recipe instead of recipe.
+-- local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("kyno_sap", 2, "images/inventoryimages/kyno_foodimages.xml")},
+-- MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
 
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
-RECIPETABS.FARM, TECH.SCIENCE_TWO, nil, nil, nil, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
+MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
 
 local KynMusher = AddRecipe("kyno_mushstump", {Ingredient("spoiled_food", 4), Ingredient("poop", 3), Ingredient("livinglog", 2)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")
 local musher_sortkey = AllRecipes["mushroom_farm"]["sortkey"]
 KynMusher.sortkey = musher_sortkey + 0.1
+
+local KynMealing = AddRecipe("kyno_mealgrinder", {Ingredient("cutstone", 2), Ingredient("flint", 2)},
+RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mealgrinder_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mealgrinder.xml", "kyno_mealgrinder.tex")
+local mealing_sortkey = AllRecipes["kyno_mushstump"]["sortkey"]
+KynMealing.sortkey = mealing_sortkey + 0.1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -283,6 +334,7 @@ local kynofoods =
 	gorge_scone = require("kyno_foodrecipes").gorge_scone,
 	gorge_trifle = require("kyno_foodrecipes").gorge_trifle,
 	gorge_cheesecake = require("kyno_foodrecipes").gorge_cheesecake,
+	kyno_syrup = require("kyno_foodrecipes").kyno_syrup,
 }
 
 kynofoods.coffee.potlevel = "med"
@@ -373,6 +425,7 @@ kynofoods.gorge_caramel_cube.potlevel = "med"
 kynofoods.gorge_scone.potlevel = "med"
 kynofoods.gorge_trifle.potlevel = "med"
 kynofoods.gorge_cheesecake.potlevel = "med"
+kynofoods.kyno_syrup.potlevel = "med"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Food On Stations.
 for name, recipe in pairs(kynofoods) do

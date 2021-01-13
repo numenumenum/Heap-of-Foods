@@ -115,7 +115,18 @@ local kyno_foods =
 		hunger = 37.5,
 		sanity = 15,
 		cooktime = 2,
+		temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+		temperatureduration = TUNING.FOOD_TEMP_AVERAGE,
 		floater = {"med", nil, 0.65},
+		prefabs = { "buff_moistureimmunity" },
+		oneat_desc = STRINGS.UI.COOKBOOK.FOOD_EFFECTS_DRY,
+        oneatenfn = function(inst, eater)
+            if eater.components.debuffable ~= nil and eater.components.debuffable:IsEnabled() and
+                not (eater.components.health ~= nil and eater.components.health:IsDead()) and
+                not eater:HasTag("playerghost") then
+                eater.components.debuffable:AddDebuff("buff_moistureimmunity", "buff_moistureimmunity")
+            end
+       	end,
 	},
 	
 	-- Hamlet Foods.
@@ -1279,6 +1290,20 @@ local kyno_foods =
 		hunger = 75,
 		sanity = 25,
 		cooktime = 2,
+		floater = {"med", nil, 0.65},
+	},
+	
+	kyno_syrup =
+	{
+		test = function(cooker, names, tags) return names.kyno_sap and (names.kyno_sap == 4 or 
+		(names.kyno_sap == 3 and (tags.dairy or tags.sweetener))) and not tags.monster end,
+		priority = 35,
+		foodtype = FOODTYPE.GOODIES,
+		perishtime = TUNING.PERISH_SUPERSLOW,
+		health = 3,
+		hunger = 9.375,
+		sanity = 0,
+		cooktime = 1,
 		floater = {"med", nil, 0.65},
 	},
 }
