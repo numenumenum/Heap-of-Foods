@@ -410,33 +410,6 @@ AddPrefabPostInit("dug_berrybush2", BushTrader)
 AddPrefabPostInit("dug_berrybush_juicy", BushTrader)
 AddPrefabPostInit("dug_grass", WheatTrader)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Evergreens drops Sap when chopped.
-AddPrefabPostInit("evergreen_normal", function(inst)
-	if GLOBAL.TheWorld.ismastersim then
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
-	end
-end)
-
-AddPrefabPostInit("evergreen_tall", function(inst)
-	if GLOBAL.TheWorld.ismastersim then
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00)
-	end
-end)
-
-AddPrefabPostInit("evergreen_sparse_normal", function(inst)
-	if GLOBAL.TheWorld.ismastersim then
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
-	end
-end)
-
-AddPrefabPostInit("evergreen_sparse_tall", function(inst)
-	if GLOBAL.TheWorld.ismastersim then
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00) 
-		inst.components.lootdropper:AddChanceLoot("kyno_sap", 1.00)
-	end
-end)
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Foliage can be cooked into Cooked Foliage.
 AddPrefabPostInit("foliage", function(inst)
 	inst:AddTag("cookable")
