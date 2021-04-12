@@ -1,8 +1,8 @@
 name = "Heap of Foods"
-version = "1.5-A"
-local myupdate = "Ingredients Rework!"
+version = "1.7-A"
+local myupdate = "Vegetables Overload!"
 
-description = "󰀄 Adds 88 brand new Crock Pot dishes alongside new ingredients to use!\n\n󰀦 Guide on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
+description = "󰀄 Adds 90 brand new Crock Pot dishes alongside new ingredients to use!\n\n󰀦 Guide on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
 author = "Kyno"
 
 api_version = 10

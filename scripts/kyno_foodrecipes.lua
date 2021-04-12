@@ -117,16 +117,8 @@ local kyno_foods =
 		cooktime = 2,
 		temperature = TUNING.COLD_FOOD_BONUS_TEMP,
 		temperatureduration = TUNING.FOOD_TEMP_AVERAGE,
+		oneat_desc = "Speeds the body",
 		floater = {"med", nil, 0.65},
-		prefabs = { "buff_moistureimmunity" },
-		oneat_desc = STRINGS.UI.COOKBOOK.FOOD_EFFECTS_DRY,
-        oneatenfn = function(inst, eater)
-            if eater.components.debuffable ~= nil and eater.components.debuffable:IsEnabled() and
-                not (eater.components.health ~= nil and eater.components.health:IsDead()) and
-                not eater:HasTag("playerghost") then
-                eater.components.debuffable:AddDebuff("buff_moistureimmunity", "buff_moistureimmunity")
-            end
-       	end,
 	},
 	
 	-- Hamlet Foods.
@@ -458,6 +450,20 @@ local kyno_foods =
 		sanity = -300,
 		cooktime = 1,
 		oneat_desc = "Hurts the body",
+		floater = {"med", nil, 0.65},
+	},
+	
+	duckyouglermz =
+	{
+		test = function(cooker, names, tags) return names.poop and names.guano and names.glommerfuel and names.saltrock end,
+		priority = 100,
+		foodtype = FOODTYPE.RAW,
+		perishtime = nil,
+		health = 0,
+		hunger = 10,
+		sanity = -10,
+		cooktime = 5,
+		oneat_desc = "Glermz's special dish",
 		floater = {"med", nil, 0.65},
 	},
 	

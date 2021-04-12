@@ -279,6 +279,17 @@ AddPrefabPostInit("canary", function(inst)
 		inst.components.periodicspawner:SetMinimumSpacing(8)
 	end
 end)
+
+-- If T.A.P is enabled, make sure Cormorant Spawns Roe too.
+if GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	AddPrefabPostInit("cormorant", function(inst)
+		if inst.components.periodicspawner ~= nil then
+			inst.components.periodicspawner:SetPrefab("kyno_roe")
+			inst.components.periodicspawner:SetDensityInRange(20, 2)
+			inst.components.periodicspawner:SetMinimumSpacing(8)
+		end
+	end)
+end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Theorically Tea Cool Down and Turns into Iced Tea.
 AddPrefabPostInit("tea", function(inst)
@@ -527,4 +538,107 @@ elseif DF_COFFEE == 3 then
 		end
 	end)
 end
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Lazy Fix!
+AddPrefabPostInit("duckyouglermz", function(inst)
+	inst.AnimState:SetScale(.8, .8, .8)
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Fix For Spiced Tropical Bouillabaisse.
+local spiced_buffs = {SPICE_CHILI = "buff_attack", SPICE_GARLIC = "buff_playerabsorption", SPICE_SUGAR = "buff_workeffectiveness"}
+local function OnEatBouillabaisse(inst, eater)
+    if not eater.components.health or eater.components.health:IsDead() or eater:HasTag("playerghost") then
+        return
+    elseif eater.components.debuffable and eater.components.debuffable:IsEnabled() then
+        eater.coffeebuff_duration = 1440
+        eater.components.debuffable:AddDebuff("kyno_coffeebuff", "kyno_coffeebuff")
+        local spiced_buff = spiced_buffs[inst.components.edible.spice]
+        if spiced_buff then
+            eater.components.debuffable:AddDebuff(spiced_buff, spiced_buff)
+        end
+		if eater.components.talker and eater:HasTag("wislanhealer") then 
+			eater.components.talker:Say("Swift!")
+		elseif
+			eater.components.talker and eater:HasTag("pyromaniac") then
+				eater.components.talker:Say("More speed to burn!")
+		elseif
+			eater.components.talker and eater:HasTag("mightyman") then
+				eater.components.talker:Say("Wolfgang is faster!")
+		elseif
+			eater.components.talker and eater:HasTag("ghostlyfriend") then
+				eater.components.talker:Say("Time to speed my death.")
+		elseif
+			eater.components.talker and eater:HasTag("electricdamageimmune") then
+				eater.components.talker:Say("MOVEMENT SPEED: HIGH LEVELS")
+		elseif
+			eater.components.talker and eater:HasTag("insomniac") then
+				eater.components.talker:Say("It helps me stay awake.")
+		elseif
+			eater.components.talker and eater:HasTag("woodcutter") then
+				eater.components.talker:Say("More speed, more trees down!")
+		elseif
+			eater.components.talker and eater:HasTag("shadowmagic") then
+				eater.components.talker:Say("Ahh. The good old energy.")
+		elseif
+			eater.components.talker and eater:HasTag("valkyrie") then
+				eater.components.talker:Say("Speed for the battle!")
+		elseif
+			eater.components.talker and eater:HasTag("dualsoul") then
+				eater.components.talker:Say("Weee!")
+		elseif
+			eater.components.talker and eater:HasTag("masterchef") then
+				eater.components.talker:Say("Mon dieu! It makes me faster to cook!")
+		elseif
+			eater.components.talker and eater:HasTag("soulstealer") then
+				eater.components.talker:Say("Hyuyu! I can pursuit Krampus now!")
+		elseif
+			eater.components.talker and eater:HasTag("handyperson") then
+				eater.components.talker:Say("The classic food of riches.")
+		elseif
+			eater.components.talker and eater:HasTag("plantkin") then
+				eater.components.talker:Say("Zooomm!")
+		elseif
+			eater.components.talker and eater:HasTag("playermerm") then
+				eater.components.talker:Say("Glurp!!! I'm fast!")
+		elseif
+			eater.components.talker and eater:HasTag("pinetreepioneer") then
+				eater.components.talker:Say("Let's go Woby!!!")
+		end
+    else
+        eater.components.locomotor:SetExternalSpeedMultiplier(eater, "kyno_coffeebuff", 1.83)
+        eater:DoTaskInTime(1440, function()
+            eater.components.locomotor:RemoveExternalSpeedMultiplier(eater, "kyno_coffeebuff")
+        end)
+    end
+end
+
+AddPrefabPostInit("tropicalbouillabaisse", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
+
+AddPrefabPostInit("tropicalbouillabaisse_spice_garlic", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
+
+AddPrefabPostInit("tropicalbouillabaisse_spice_sugar", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
+
+AddPrefabPostInit("tropicalbouillabaisse_spice_chili", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
+
+AddPrefabPostInit("tropicalbouillabaisse_spice_salt", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

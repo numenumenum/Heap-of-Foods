@@ -52,7 +52,9 @@ local function fn()
 	inst.AnimState:SetBuild("quagmire_spiceshrub")
 	inst.AnimState:PlayAnimation("idle", true)
 	
+	inst:AddTag("plant")
 	inst:AddTag("bush")
+	inst:AddTag("renewable")
 	inst:AddTag("spotbush")
 	
 	inst.entity:SetPristine()

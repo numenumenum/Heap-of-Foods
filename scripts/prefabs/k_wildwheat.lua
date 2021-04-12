@@ -102,7 +102,7 @@ local function grass(name, stage)
 		inst:AddTag("plant")
         inst:AddTag("renewable")
 		inst:AddTag("silviculture") 
-        inst:AddTag("witherable")
+        -- inst:AddTag("witherable")
 
         inst.entity:SetPristine()
 
@@ -126,7 +126,7 @@ local function grass(name, stage)
         inst.components.pickable.cycles_left = 20
         inst.components.pickable.ontransplantfn = ontransplantfn
 
-        inst:AddComponent("witherable")
+        -- inst:AddComponent("witherable")
 
         if stage == 1 then
             inst.components.pickable:MakeBarren()

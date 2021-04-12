@@ -21,6 +21,8 @@ Assets =
 	Asset("ANIM", "anim/kyno_mushroomstump.zip"),
 	Asset("ANIM", "anim/kyno_spotbush.zip"),
 	Asset("ANIM", "anim/kyno_wheat.zip"),
+	Asset("ANIM", "anim/kyno_aloe.zip"),
+	Asset("ANIM", "anim/kyno_radish.zip"),
 
 	Asset("IMAGE", "images/minimapimages/kyno_foodminimap.tex"),
 	Asset("ATLAS", "images/minimapimages/kyno_foodminimap.xml"),
@@ -69,6 +71,10 @@ PrefabFiles =
 	"k_wildwheat",
 	"k_dugwildwheat",
 	"k_mealgrinder",
+	
+	"k_crop_aloe",
+	"k_crop_radish",
+	
 	"ash",
 	"evergreens",
 }
@@ -86,6 +92,10 @@ AddIngredientValues({"robin_winter"}, {robin_winter=1}, true)
 AddIngredientValues({"petals"}, {veggie=0.5}, true)
 AddIngredientValues({"gears"}, {gears=1}, true)
 AddIngredientValues({"rocks"}, {rocks=1}, {elemental=1}, {inedible=1}, true)
+AddIngredientValues({"saltrock"}, {rocks=1}, {elemental=1}, {inedible=1}, true)
+AddIngredientValues({"poop"}, {poop=1}, {glermz=1}, true)
+AddIngredientValues({"guano"}, {poop=1}, {glermz=1}, true)
+AddIngredientValues({"glommerfuel"}, {poop=1}, {glermz=1}, true)
 AddIngredientValues({"kyno_coffeebeans_cooked"}, {seeds=1}, {fruit=0.5}, true)
 AddIngredientValues({"kyno_coffeebeans"}, {seeds=1}, {fruit=0.5}, true)
 AddIngredientValues({"kyno_shark_fin"}, {fish=1}, true)
@@ -111,6 +121,10 @@ AddIngredientValues({"kyno_white_cap_cooked"}, {veggie=0.5}, {mushroom=1}, true)
 AddIngredientValues({"kyno_foliage"}, {veggie=0.5}, true) -- This is a false Foliage. We just need it because Cooked Foliage icon doesn't display without it.
 AddIngredientValues({"kyno_foliage_cooked"}, {veggie=0.5}, true)
 AddIngredientValues({"kyno_sap"}, {inedible=1}, {sap=1}, true)
+AddIngredientValues({"kyno_aloe"}, {veggie=1}, true)
+AddIngredientValues({"kyno_aloe_cooked"}, {veggie=1}, true)
+AddIngredientValues({"kyno_radish"}, {veggie=1}, true)
+AddIngredientValues({"kyno_radish_cooked"}, {veggie=1}, true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Minimap Icons.
 AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
@@ -118,6 +132,7 @@ AddMinimapAtlas("images/minimapimages/kyno_foodminimap.xml")
 -- Icons For Cookbook.
 RegisterInventoryItemAtlas("images/inventoryimages2.xml", "slurtle_shellpieces.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "rabbit.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "rabbit_winter.tex")
 RegisterInventoryItemAtlas("images/inventoryimages1.xml", "firenettles.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "foliage.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "succulent_picked.tex")
@@ -125,6 +140,10 @@ RegisterInventoryItemAtlas("images/inventoryimages.xml", "robin_winter.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "petals.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "gears.tex")
 RegisterInventoryItemAtlas("images/inventoryimages.xml", "rocks.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "poop.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "guano.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "glommerfuel.tex")
+RegisterInventoryItemAtlas("images/inventoryimages.xml", "saltrock.tex")
 
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_coffeebeans_cooked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_coffeebeans.tex")
@@ -152,6 +171,10 @@ RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_w
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_foliage_cooked.tex")
 RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_sap.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_aloe.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_aloe_cooked.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_radish.tex")
+RegisterInventoryItemAtlas("images/inventoryimages/kyno_foodimages.xml", "kyno_radish_cooked.tex")
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Custom TechTree for Mealing Stone.
 local TechTree = require("techtree")
@@ -196,10 +219,6 @@ MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xm
 local KynSpice = AddRecipe("kyno_spotspice", {Ingredient("kyno_spotspice_leaf", 2, "images/inventoryimages/kyno_foodimages.xml")},
 MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_spotspice_ground.tex")
 
--- Maple Syrup is now a crock pot recipe instead of recipe.
--- local KynSyrup = AddRecipe("kyno_syrup", {Ingredient("kyno_sap", 2, "images/inventoryimages/kyno_foodimages.xml")},
--- MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_syrup.tex")
-
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
 MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
 
@@ -212,6 +231,16 @@ local KynMealing = AddRecipe("kyno_mealgrinder", {Ingredient("cutstone", 2), Ing
 RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mealgrinder_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mealgrinder.xml", "kyno_mealgrinder.tex")
 local mealing_sortkey = AllRecipes["kyno_mushstump"]["sortkey"]
 KynMealing.sortkey = mealing_sortkey + 0.1
+
+local OldFarm1 = AddRecipe("slow_farmplot", {Ingredient("cutgrass", 8), Ingredient("poop", 4), Ingredient("log", 4)},
+RECIPETABS.FARM, TECH.SCIENCE_ONE, "slow_farmplot_placer", 0, nil, nil, nil, "images/inventoryimages.xml", "slow_farmplot.tex")
+local plot_sortkey = AllRecipes["saltbox"]["sortkey"]
+OldFarm1.sortkey = plot_sortkey + 0.1
+
+local OldFarm2 = AddRecipe("fast_farmplot", {Ingredient("cutgrass", 10), Ingredient("poop", 6), Ingredient("rocks", 4)},
+RECIPETABS.FARM, TECH.SCIENCE_ONE, "fast_farmplot_placer", 0, nil, nil, nil, "images/inventoryimages.xml", "fast_farmplot.tex")
+local plot2_sortkey = AllRecipes["slow_farmplot"]["sortkey"]
+OldFarm2.sortkey = plot2_sortkey + 0.1
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Import The Foods.
 for k, v in pairs(require("kyno_foodrecipes")) do
@@ -271,6 +300,7 @@ local kynofoods =
 	-- Secret Custom.
 	bowlofgears = require("kyno_foodrecipes").bowlofgears,
 	longpigmeal = require("kyno_foodrecipes").longpigmeal,
+	duckyouglermz = require("kyno_foodrecipes").duckyouglermz,
 	
 	-- The Gorge.
 	gorge_bread = require("kyno_foodrecipes").gorge_bread,
@@ -427,6 +457,7 @@ kynofoods.gorge_scone.potlevel = "med"
 kynofoods.gorge_trifle.potlevel = "med"
 kynofoods.gorge_cheesecake.potlevel = "med"
 kynofoods.kyno_syrup.potlevel = "med"
+kynofoods.duckyouglermz.potlevel = "med"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Food On Stations.
 for name, recipe in pairs(kynofoods) do
@@ -462,8 +493,9 @@ if GLOBAL.TheNet:GetIsMasterSimulation() then
 	"gorge_candy", "gorge_bread_pudding", "gorge_berry_tart", "gorge_macaroni", "gorge_bagel_and_fish", "gorge_grilled_cheese", "gorge_creammushroom", "gorge_manicotti",
 	"gorge_cheeseburger", "gorge_fettuccine", "gorge_onion_soup", "gorge_breaded_cutlet", "gorge_creamy_fish", "gorge_pizza", "gorge_pot_roast", "gorge_crab_cake",
 	"gorge_steak_frites", "gorge_shooter_sandwich", "gorge_bacon_wrapped", "gorge_crab_roll", "gorge_meat_wellington", "gorge_crab_ravioli", "gorge_caramel_cube",
-	"gorge_scone", "gorge_trifle", "gorge_cheesecake", "robin_winter", "gears", "rocks", "petals", "foliage", "rabbit", "succulent_picked", "dug_kyno_spotbush", "kyno_spotspice_leaf",
-	"kyno_wheat", "kyno_wheat_cooked", "kyno_sap", "kyno_sap_spoiled", "kyno_foliage", "kyno_foliage_cooked", "dug_kyno_wildwheat"}) do
+	"gorge_scone", "gorge_trifle", "gorge_cheesecake", "robin_winter", "gears", "rocks", "petals", "foliage", "rabbit", "rabbit_winter", "succulent_picked", "dug_kyno_spotbush", "kyno_spotspice_leaf",
+	"kyno_wheat", "kyno_wheat_cooked", "kyno_sap", "kyno_sap_spoiled", "kyno_foliage", "kyno_foliage_cooked", "dug_kyno_wildwheat", "kyno_aloe", "kyno_aloe_cooked", "kyno_aloe_seeds",
+	"kyno_radish", "kyno_radish_cooked", "kyno_radish_seeds", "duckyouglermz", "poop", "guano", "saltrock", "glommerfuel"}) do
         local foods_name = foods
         AddPrefabPostInit(foods_name, function(inst)
             inst.components.inventoryitem.imagename = foods_name
