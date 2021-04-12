@@ -99,7 +99,7 @@ local kyno_foods =
 		perishtime = TUNING.PERISH_MED,
 		health = 3,
 		hunger = 12.5,
-		sanity = 33,
+		sanity = 10,
 		cooktime = 2,
 		floater = {"med", nil, 0.65},
 	},
@@ -1140,7 +1140,8 @@ local kyno_foods =
 	
 	gorge_pot_roast =
 	{
-		test = function(cooker, names, tags) return (tags.meat == 2) and tags.veggie and names.kyno_spotspice and not (names.potato or names.potato_cooked) and not tags.fish end,
+		test = function(cooker, names, tags) return (tags.meat == 2) and tags.veggie and names.kyno_spotspice and not (names.potato or names.potato_cooked) and not tags.fish 
+		and not tags.monster end,
 		priority = 35,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
