@@ -491,6 +491,66 @@ local function LimpetTrader(inst)
 	end
 end
 
+local function TaroTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_taroroot" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_taroroot" }
+	end
+end
+
+local function LotusTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_lotus_flower" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_lotus_flower" }
+	end
+end
+
+local function CressTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_waterycress" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_waterycress" }
+	end
+end
+
+local function CressTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_cucumber_seeds" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_cucumber_seeds" }
+	end
+end
+
 AddPrefabPostInit("dug_berrybush", BushTrader)
 AddPrefabPostInit("dug_berrybush2", BushTrader)
 AddPrefabPostInit("dug_berrybush_juicy", BushTrader)
@@ -500,6 +560,10 @@ AddPrefabPostInit("carrot_seeds", RadishTrader)
 AddPrefabPostInit("durian_seeds", FennelTrader)
 AddPrefabPostInit("asparagus_seeds", AloeTrader)
 AddPrefabPostInit("cutlichen", LimpetTrader)
+AddPrefabPostInit("eggplant", TaroTrader)
+AddPrefabPostInit("butterfly", LotusTrader)
+AddPrefabPostInit("succulent_picked", CressTrader)
+AddPrefabPostInit("watermelon_seeds", CucumberTrader)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Foliage can be cooked into Cooked Foliage.
 AddPrefabPostInit("foliage", function(inst)
