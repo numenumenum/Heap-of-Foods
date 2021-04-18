@@ -1,5 +1,5 @@
 name = "Heap of Foods"
-version = "1.7-A"
+version = "1.8-A"
 local myupdate = "Vegetables Overload!"
 
 description = "󰀄 Adds 90 brand new Crock Pot dishes alongside new ingredients to use!\n\n󰀦 Guide on the mod page!\n\n󰀌 Mod Version: "..version.."\n\󰀧 Update: "..myupdate..""
@@ -54,4 +54,19 @@ configuration_options =
         },
         default = 0,
     },
+	{
+		name = "worldfood",
+		label = "Natural Spawns",
+		hover = "Should Wild Wheats, Radishes and other plants spawn naturally in the world?",
+		options =
+		{
+			{description = "No", 
+			hover = "Nothing will spawn naturally.",
+			data = 0},
+            {description = "Yes", 
+			hover = "New plants will spawn naturally during world generation.",
+			data = 1},
+        },
+        default = 1,
+	},
 }

@@ -1,7 +1,7 @@
 local assets =
 {
 	Asset("ANIM", "anim/kyno_crop_seeds.zip"),
-	Asset("ANIM", "anim/kyno_aloe.zip"),
+	Asset("ANIM", "anim/kyno_fennel.zip"),
 	
 	Asset("IMAGE", "images/inventoryimages/kyno_foodimages.tex"),
 	Asset("ATLAS", "images/inventoryimages/kyno_foodimages.xml"),
@@ -10,9 +10,9 @@ local assets =
 
 local prefabs = 
 {
-	"kyno_aloe",
-	"kyno_aloe_cooked",
-	"kyno_aloe_seeds",
+	"kyno_fennel",
+	"kyno_fennel_cooked",
+	"kyno_fennel_seeds",
 	"spoiled_food",
 }
 
@@ -28,9 +28,11 @@ local function fn()
     inst.entity:AddAnimState()
     inst.entity:AddSoundEmitter()
     inst.entity:AddNetwork()
+	
+	inst.AnimState:SetScale(.6, .6, .6)
 
-    inst.AnimState:SetBank("kyno_aloe")
-    inst.AnimState:SetBuild("kyno_aloe")
+    inst.AnimState:SetBank("kyno_fennel")
+    inst.AnimState:SetBuild("kyno_fennel")
     inst.AnimState:PlayAnimation("planted")
     inst.AnimState:SetRayTestOnBB(true)
 
@@ -44,7 +46,7 @@ local function fn()
 
     inst:AddComponent("pickable")
     inst.components.pickable.picksound = "dontstarve/wilson/pickup_plants"
-    inst.components.pickable:SetUp("kyno_aloe", 10)
+    inst.components.pickable:SetUp("kyno_fennel", 10)
     inst.components.pickable.onpickedfn = onpicked
 
     inst.components.pickable.quickpick = true
@@ -58,20 +60,20 @@ local function fn()
     return inst
 end
 
-local function aloe()
+local function fennel()
 	local inst = CreateEntity()
 
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()
 	
-	inst.AnimState:SetScale(.7, .7, .7)
+	inst.AnimState:SetScale(.6, .6, .6)
 
 	MakeInventoryPhysics(inst)
 	MakeInventoryFloatable(inst)
 
-	inst.AnimState:SetBank("kyno_aloe")
-	inst.AnimState:SetBuild("kyno_aloe")
+	inst.AnimState:SetBank("kyno_fennel")
+	inst.AnimState:SetBuild("kyno_fennel")
 	inst.AnimState:PlayAnimation("idle")
 	
 	inst:AddTag("veggie")
@@ -89,9 +91,9 @@ local function aloe()
 	inst:AddComponent("tradable")
 
    	inst:AddComponent("edible")
-	inst.components.edible.healthvalue = 8
-	inst.components.edible.hungervalue = 9.375
-	inst.components.edible.sanityvalue = 0
+	inst.components.edible.healthvalue = 1
+	inst.components.edible.hungervalue = 12.5
+	inst.components.edible.sanityvalue = -5
 	inst.components.edible.foodtype = FOODTYPE.VEGGIE
 
 	inst:AddComponent("perishable")
@@ -104,10 +106,10 @@ local function aloe()
 
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
-	inst.components.inventoryitem.imagename = "kyno_aloe"
+	inst.components.inventoryitem.imagename = "kyno_fennel"
 
 	inst:AddComponent("cookable")
-	inst.components.cookable.product = "kyno_aloe_cooked"
+	inst.components.cookable.product = "kyno_fennel_cooked"
 
 	MakeSmallBurnable(inst)
 	MakeSmallPropagator(inst)
@@ -116,20 +118,18 @@ local function aloe()
 	return inst
 end
 
-local function aloe_cooked()
+local function fennel_cooked()
 	local inst = CreateEntity()
 
 	inst.entity:AddTransform()
 	inst.entity:AddAnimState()
 	inst.entity:AddNetwork()
-	
-	inst.AnimState:SetScale(.7, .7, .7)
 
 	MakeInventoryPhysics(inst)
 	MakeInventoryFloatable(inst)
 
-	inst.AnimState:SetBank("kyno_aloe")
-	inst.AnimState:SetBuild("kyno_aloe")
+	inst.AnimState:SetBank("kyno_fennel")
+	inst.AnimState:SetBuild("kyno_fennel")
 	inst.AnimState:PlayAnimation("cooked")
 	
 	inst:AddTag("veggie")
@@ -147,7 +147,7 @@ local function aloe_cooked()
 	inst:AddComponent("edible")
 	inst.components.edible.healthvalue = 3
 	inst.components.edible.hungervalue = 12.5
-	inst.components.edible.sanityvalue = 0
+	inst.components.edible.sanityvalue = 5
 	inst.components.edible.foodtype = FOODTYPE.VEGGIE
 	
 	inst:AddComponent("perishable")
@@ -160,7 +160,7 @@ local function aloe_cooked()
 
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
-	inst.components.inventoryitem.imagename = "kyno_aloe_cooked"
+	inst.components.inventoryitem.imagename = "kyno_fennel_cooked"
 
 	MakeSmallBurnable(inst)
 	MakeSmallPropagator(inst)
@@ -182,7 +182,7 @@ local function OnDeploy(inst, pt, deployer, rot)
     inst:Remove()
 end
 
-local function aloe_seeds()
+local function fennel_seeds()
 	local inst = CreateEntity()
 
 	inst.entity:AddTransform()
@@ -194,7 +194,7 @@ local function aloe_seeds()
 
 	inst.AnimState:SetBank("kyno_crop_seeds")
 	inst.AnimState:SetBuild("kyno_crop_seeds")
-	inst.AnimState:PlayAnimation("aloe")
+	inst.AnimState:PlayAnimation("fennel")
 	inst.AnimState:SetRayTestOnBB(true)
 	
 	inst:AddTag("deployedplant")
@@ -231,14 +231,14 @@ local function aloe_seeds()
 
 	inst:AddComponent("inventoryitem")
 	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
-	inst.components.inventoryitem.imagename = "kyno_aloe_seeds"
+	inst.components.inventoryitem.imagename = "kyno_fennel_seeds"
 	
 	inst:AddComponent("cookable")
 	inst.components.cookable.product = "seeds_cooked"
 	
 	inst:AddComponent("plantable")
 	inst.components.plantable.growtime = TUNING.SEEDS_GROW_TIME
-	inst.components.plantable.product = "kyno_aloe"
+	inst.components.plantable.product = "kyno_fennel"
 	
 	inst:AddComponent("deployable")
 	inst.components.deployable:SetDeployMode(DEPLOYMODE.CUSTOM)
@@ -255,7 +255,7 @@ local function aloe_seeds()
 	return inst
 end
 
-return Prefab("kyno_aloe_ground", fn, assets, prefabs),
-Prefab("kyno_aloe", aloe, assets, prefabs),
-Prefab("kyno_aloe_cooked", aloe_cooked, assets, prefabs),
-Prefab("kyno_aloe_seeds", aloe_seeds, assets, prefabs)
+return Prefab("kyno_fennel_ground", fn, assets, prefabs),
+Prefab("kyno_fennel", fennel, assets, prefabs),
+Prefab("kyno_fennel_cooked", fennel_cooked, assets, prefabs),
+Prefab("kyno_fennel_seeds", fennel_seeds, assets, prefabs)

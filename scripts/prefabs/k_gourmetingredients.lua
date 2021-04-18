@@ -8,6 +8,7 @@ local assets =
 	Asset("ANIM", "anim/quagmire_mushrooms.zip"),
 	Asset("ANIM", "anim/quagmire_sap.zip"),
 	Asset("ANIM", "anim/quagmire_crop_wheat.zip"),
+	Asset("ANIM", "anim/quagmire_salt.zip"),
 	Asset("ANIM", "anim/foliage.zip"),
 	
 	Asset("IMAGE", "images/inventoryimages/kyno_foodimages.tex"),
@@ -22,6 +23,7 @@ local prefabs =
 	"kyno_white_cap_cooked",
 	"kyno_sap_ruined",
 	"kyno_wheat_cooked",
+	"kyno_salt",
 }
 
 local function wheatfn()
@@ -758,6 +760,44 @@ local function foliage_cookedfn()
 	return inst
 end
 
+local function saltfn()
+    local inst = CreateEntity()
+
+    inst.entity:AddTransform()
+    inst.entity:AddAnimState()
+    inst.entity:AddNetwork()
+
+    MakeInventoryPhysics(inst)
+	MakeInventoryFloatable(inst, "small", 0.05)
+
+    inst.AnimState:SetBank("quagmire_salt")
+    inst.AnimState:SetBuild("quagmire_salt")
+    inst.AnimState:PlayAnimation("idle")
+
+	inst:AddTag("gourmet_salt")
+	inst:AddTag("gourmet_ingredient")
+
+    inst.entity:SetPristine()
+
+    if not TheWorld.ismastersim then
+        return inst
+    end
+	
+    inst:AddComponent("inspectable")
+	inst:AddComponent("tradable")
+
+    inst:AddComponent("inventoryitem")
+	inst.components.inventoryitem.atlasname = "images/inventoryimages/kyno_foodimages.xml"
+	inst.components.inventoryitem.imagename = "kyno_salt"
+	
+    inst:AddComponent("stackable")
+	inst.components.stackable.maxsize = TUNING.STACK_SIZE_SMALLITEM
+	
+	MakeHauntableLaunchAndPerish(inst)
+
+    return inst
+end
+
 return Prefab("kyno_wheat", wheatfn, assets, prefabs),
 Prefab("kyno_wheat_cooked", wheat_cookedfn, assets, prefabs),
 Prefab("kyno_flour", flourfn, assets, prefabs),
@@ -770,5 +810,6 @@ Prefab("kyno_bacon", baconfn, assets, prefabs),
 Prefab("kyno_bacon_cooked", bacon_cookedfn, assets),
 Prefab("kyno_white_cap", mushfn, assets),
 Prefab("kyno_white_cap_cooked", mush_cookedfn, assets),
-Prefab("kyno_foliage", foliagefn, assets, prefabs), -- False Foliage, check "modmain.lua" for more infor.
-Prefab("kyno_foliage_cooked", foliage_cookedfn, assets)
+Prefab("kyno_foliage", foliagefn, assets, prefabs), -- False Foliage, check "modmain.lua" for more info.
+Prefab("kyno_foliage_cooked", foliage_cookedfn, assets),
+Prefab("kyno_salt", saltfn, assets)

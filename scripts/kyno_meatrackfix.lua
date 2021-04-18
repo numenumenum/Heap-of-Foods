@@ -84,7 +84,11 @@ do
 	anim_ondone_food = anim_ondone_food
 
 	local my_build_name = "kyno_humanmeat"
+	local my_build_name2 = "kyno_seaweeds"
 
 	anim_ondry_food["kyno_humanmeat"] = {build = my_build_name, folder = "humanmeat"}
 	anim_ondone_food["kyno_humanmeat_dried"] = {build = my_build_name, folder = "humanmeat_dried"}
+	
+	anim_ondry_food["kyno_seaweeds"] = {build = my_build_name2, folder = "seaweed"}
+	anim_ondone_food["kyno_seaweeds_dried"] = {build = my_build_name2, folder = "seaweed_dried"}
 end

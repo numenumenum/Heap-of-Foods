@@ -176,8 +176,16 @@ self:SetRegrowthForType("lightflier_flower", TUNING.LIGHTFLIER_FLOWER_REGROWTH_T
 self:SetRegrowthForType("kyno_aloe_ground", TUNING.CARROT_REGROWTH_TIME, "kyno_aloe_ground", function()
         return not (_worldstate.isnight or _worldstate.iswinter or _worldstate.snowlevel > 0) and TUNING.CARROT_REGROWTH_TIME_MULT or 0
     end)
-	
 self:SetRegrowthForType("kyno_radish_ground", TUNING.CARROT_REGROWTH_TIME, "kyno_radish_ground", function()
+        return not (_worldstate.isnight or _worldstate.iswinter or _worldstate.snowlevel > 0) and TUNING.CARROT_REGROWTH_TIME_MULT or 0
+    end)
+self:SetRegrowthForType("kyno_fennel_ground", TUNING.FLOWER_CAVE_REGROWTH_TIME, "kyno_fennel_ground", function()
+        return TUNING.FLOWER_CAVE_REGROWTH_TIME_MULT
+    end)
+self:SetRegrowthForType("kyno_sweetpotato_ground", TUNING.CARROT_REGROWTH_TIME, "kyno_sweetpotato_ground", function()
+        return not (_worldstate.isnight or _worldstate.iswinter or _worldstate.snowlevel > 0) and TUNING.CARROT_REGROWTH_TIME_MULT or 0
+    end)
+self:SetRegrowthForType("kyno_cucumber_ground", TUNING.CARROT_REGROWTH_TIME, "kyno_cucumber_ground", function()
         return not (_worldstate.isnight or _worldstate.iswinter or _worldstate.snowlevel > 0) and TUNING.CARROT_REGROWTH_TIME_MULT or 0
     end)
 --------------------------------------------------------------------------

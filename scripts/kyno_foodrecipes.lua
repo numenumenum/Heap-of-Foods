@@ -19,11 +19,11 @@ local kyno_foods =
 	
 	bisque =
 	{
-		test = function(cooker, names, tags) return (names.cutlichen and names.cutlichen == 2) and tags.fish and tags.frozen end,
+		test = function(cooker, names, tags) return (names.kyno_limpets or names.kyno_limpets_cooked == 3) and tags.frozen end,
 		priority = 30,
 		foodtype = FOODTYPE.MEAT,
 		perishtime = TUNING.PERISH_MED,
-		health = 30,
+		health = 60,
 		hunger = 18.75,
 		sanity = 5,
 		cooktime = 1,
@@ -73,12 +73,13 @@ local kyno_foods =
 		sanity = -10,
 		cooktime = 1,
 		potlevel = "med",
+		oneat_desc = "Increases naughtiness",
 		floater = {"med", nil, 0.65},
 	},
 	
 	sweetpotatosouffle =
 	{
-		test = function(cooker, names, tags) return (names.potato or names.potato_cooked) and (names.onion or names.onion_cooked) and (tags.sweetener == 2) end,
+		test = function(cooker, names, tags) return (names.kyno_sweetpotato == 2) and (tags.egg == 2) and not (names.kyno_sweetpotato_cooked) and not (names.potato or names.potato_cooked) end,
 		priority = 30,
 		foodtype = FOODTYPE.VEGGIE,
 		secondaryfoodtype = FOODTYPE.MEAT,
@@ -99,7 +100,7 @@ local kyno_foods =
 		perishtime = TUNING.PERISH_MED,
 		health = 3,
 		hunger = 12.5,
-		sanity = 10,
+		sanity = 15,
 		cooktime = 2,
 		floater = {"med", nil, 0.65},
 	},
@@ -311,8 +312,7 @@ local kyno_foods =
 	
 	slaw = 
 	{
-		test = function(cooker, names, tags) return (names.onion or names.onion_cooked) and (names.garlic or names.garlic_cooked) and 
-		(names.potato or names.potato_cooked) and (names.foliage or names.kyno_foliage_cooked) end,
+		test = function(cooker, names, tags) return (names.kyno_fennel or names.kyno_fennel_cooked == 2) and (names.kyno_radish or names.kyno_radish_cooked) end,
 		priority = 20,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_MED,
@@ -326,26 +326,26 @@ local kyno_foods =
 	
 	lotusbowl = 
 	{
-		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and tags.veggie and not (names.foliage or names.kyno_foliage_cooked) end,
+		test = function(cooker, names, tags) return (names.kyno_lotus_flower or names.kyno_lotus_flower_cooked == 3) end,
 		priority = 30,
 		foodtype = FOODTYPE.VEGGIE,
 		perishtime = TUNING.PERISH_FASTISH,
-		health = 3,
+		health = 8,
 		hunger = 12.5,
-		sanity = 5,
+		sanity = 50,
 		cooktime = 0.5,
 		floater = {"med", nil, 0.65},
 	},
 	
 	poi = 
 	{
-		test = function(cooker, names, tags) return (names.petals and names.petals == 2) and (names.foliage or names.kyno_foliage_cooked == 2) end,
+		test = function(cooker, names, tags) return (names.kyno_taroroot or names.kyno_taroroot_cooked == 3) and not tags.inedible end,
 		priority = 30,
 		foodtype = FOODTYPE.VEGGIE,
-		perishtime = TUNING.PERISH_FASTISH,
-		health = 3,
-		hunger = 25,
-		sanity = 10,
+		perishtime = TUNING.PERISH_MED,
+		health = 20,
+		hunger = 62.5,
+		sanity = 5,
 		cooktime = 1,
 		floater = {"med", nil, 0.65},
 	},
@@ -422,6 +422,45 @@ local kyno_foods =
         end,
 	},
 	
+	cucumbersalad =
+	{
+		test = function(cooker, names, tags) return names.kyno_cucumber and tags.veggie >= 2 and not tags.meat and not tags.inedible 
+		and not tags.egg and not tags.sweetener and not tags.fruit and not (names.kyno_taroroot or names.kyno_taroroot_cooked) end,
+		priority = 30,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_MED,
+		health = 10,
+		hunger = 25,
+		sanity = 15,
+		cooktime = 1.2,
+		floater = {"med", nil, 0.65},
+		prefabs = { "buff_moistureimmunity" },
+		oneat_desc = STRINGS.UI.COOKBOOK.FOOD_EFFECTS_DRY,
+        oneatenfn = function(inst, eater)
+            if eater.components.debuffable ~= nil and eater.components.debuffable:IsEnabled() and
+                not (eater.components.health ~= nil and eater.components.health:IsDead()) and
+                not eater:HasTag("playerghost") then
+                eater.components.debuffable:AddDebuff("buff_moistureimmunity", "buff_moistureimmunity")
+            end
+       	end,
+	},
+	
+	waterycressbowl =
+	{
+		test = function(cooker, names, tags) return (names.kyno_waterycress == 2) and names.succulent_picked and tags.veggie and not tags.inedible and not tags.egg
+		and not tags.sweetener and not tags.fruit and not tags.meat end,
+		priority = 35,
+		foodtype = FOODTYPE.VEGGIE,
+		perishtime = TUNING.PERISH_SLOW,
+		health = 20,
+		hunger = 37.5,
+		sanity = 5,
+		cooktime = 1,
+		temperature = TUNING.COLD_FOOD_BONUS_TEMP,
+		temperatureduration = TUNING.FOOD_TEMP_AVERAGE,
+		floater = {"med", nil, 0.65},
+	},
+	
 	-- Secret Custom Foods. Why are you here by the way?
 	
 	bowlofgears = 
@@ -455,13 +494,13 @@ local kyno_foods =
 	
 	duckyouglermz =
 	{
-		test = function(cooker, names, tags) return names.poop and names.guano and names.glommerfuel and names.saltrock end,
+		test = function(cooker, names, tags) return names.poop and names.guano and names.glommerfuel and names.kyno_salt end,
 		priority = 100,
-		foodtype = FOODTYPE.RAW,
+		foodtype = FOODTYPE.SEEDS,
 		perishtime = nil,
 		health = 0,
-		hunger = 10,
-		sanity = -10,
+		hunger = 0,
+		sanity = 0,
 		cooktime = 5,
 		oneat_desc = "Glermz's special dish",
 		floater = {"med", nil, 0.65},

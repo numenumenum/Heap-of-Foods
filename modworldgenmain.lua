@@ -29,7 +29,8 @@ Catcoons = {"BGDeciduous","DeepDeciduous","MagicalDeciduous","DeciduousMole","Po
 ]]--
 
 GLOBAL.require("map/terrain")
-
+local WORLDTHINGS = GetModConfigData("worldfood")
+if WORLDTHINGS == 1 then
 local function mymathclamp(num, min, max)
     return num <= min and min or (num >= max and max or num)
 end
@@ -87,14 +88,40 @@ local function AddThingtoWorldGeneration(prefab,roomincrease)
     end
 end
 
-AddThingtoWorldGeneration("kyno_aloe_ground",{BGGrass=0.8})
+AddThingtoWorldGeneration("kyno_aloe_ground",{BGGrass=1,BGGrassBurnt=1,FlowerPatch=1,GrassyMoleColony=1})
 GLOBAL.terrain.filter.kyno_aloe_ground = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
 
-AddThingtoWorldGeneration("kyno_wildwheat",{BGSavanna=2,BeefalowPlain=2,WalrusHut_Plains=2,Plain=2,BarePlain=2})
+AddThingtoWorldGeneration("kyno_wildwheat",{BGSavanna=3,BeefalowPlain=3,WalrusHut_Plains=3,Plain=3,BarePlain=3})
 GLOBAL.terrain.filter.kyno_wildwheat = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
 
 AddThingtoWorldGeneration("kyno_spotbush",{BGDeciduous=2,DeepDeciduous=2,MagicalDeciduous=2,DeciduousMole=2,PondyGrass=2})
 GLOBAL.terrain.filter.kyno_spotbush = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
 
-AddThingtoWorldGeneration("kyno_radish_ground",{BGDeciduous=0.8,DeepDeciduous=0.8,MagicalDeciduous=0.8,DeciduousMole=0.8,PondyGrass=0.8})
+AddThingtoWorldGeneration("kyno_radish_ground",{BGDeciduous=1,DeepDeciduous=1,MagicalDeciduous=1,DeciduousMole=1,PondyGrass=1})
 GLOBAL.terrain.filter.kyno_radish_ground = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_fennel_ground",{SinkholeForest=2,SinkholeCopses=2,SparseSinkholes=2,SinkholeOasis=2,GrasslandSinkhole=2,BGSinkhole=2,BGSinkholeRoom=2})
+GLOBAL.terrain.filter.kyno_fennel_ground = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_sweetpotato_ground",{BGForest=1,BGDeepForest=1,DeepForest=1,Forest=1,BGCrappyForest=1,BurntForest=1,CrappyDeepForest=1,CrappyForest=1,
+SpiderForest=1,BurntClearing=1,Clearing=1,MoonbaseOne=1,MandrakeHome=1})
+GLOBAL.terrain.filter.kyno_sweetpotato_ground = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_lotus_ocean",{OceanCoastal=0.2,OceanRough=0.1,OceanHazardous=0.2})
+GLOBAL.terrain.filter.kyno_lotus_ocean = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_seaweeds_ocean",{OceanCoastal=0.2,OceanRough=0.1,OceanHazardous=0.2})
+GLOBAL.terrain.filter.kyno_seaweeds_ocean = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_limpetrock", {MoonIsland_IslandShard=0.3,MoonIsland_Beach=0.3,MoonIsland_Mine=0.3})
+GLOBAL.terrain.filter.kyno_limpetrock = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_taroroot_ocean",{OceanSwell=0.2,OceanRough=0.1,OceanHazardous=0.2})
+GLOBAL.terrain.filter.kyno_taroroot_ocean = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_cucumber_ground",{OceanCoastal=0.1,OceanRough=0.1,OceanHazardous=0.1})
+GLOBAL.terrain.filter.kyno_cucumber_ground = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+
+AddThingtoWorldGeneration("kyno_waterycress_ocean",{OceanSwell=0.2,OceanRough=0.1,OceanHazardous=0.2})
+GLOBAL.terrain.filter.kyno_waterycress_ocean = {GLOBAL.GROUND.ROAD, GLOBAL.GROUND.WOODFLOOR, GLOBAL.GROUND.CARPET, GLOBAL.GROUND.CHECKER}
+end

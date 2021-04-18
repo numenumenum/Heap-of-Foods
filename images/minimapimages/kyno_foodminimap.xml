@@ -2,7 +2,12 @@
 <Atlas>
 	<Texture filename="kyno_foodminimap.tex" />
 	<Elements>
-		<Element name="kyno_coffeebush.tex" u1="0.001" u2="0.499" v2="0.999" v1="0.001" variant="" />
-		<Element name="kyno_wildwheat.tex" u1="0.501" u2="0.999" v2="0.999" v1="0.001" variant="" />
+		<Element name="kyno_coffeebush.tex" u1="0.001" u2="0.249" v2="0.999" v1="0.501" variant="" />
+		<Element name="kyno_limpetrock.tex" u1="0.251" u2="0.499" v2="0.999" v1="0.501" variant="" />
+		<Element name="kyno_lotus.tex" u1="0.001" u2="0.249" v2="0.499" v1="0.001" variant="" />
+		<Element name="kyno_seaweeds.tex" u1="0.251" u2="0.499" v2="0.499" v1="0.001" variant="" />
+		<Element name="kyno_taroroot.tex" u1="0.501" u2="0.749" v2="0.999" v1="0.501" variant="" />
+		<Element name="kyno_waterycress_ocean.tex" u1="0.751" u2="0.999" v2="0.999" v1="0.501" variant="" />
+		<Element name="kyno_wildwheat.tex" u1="0.501" u2="0.749" v2="0.499" v1="0.001" variant="" />
 	</Elements>
 </Atlas>

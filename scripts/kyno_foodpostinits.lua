@@ -385,13 +385,13 @@ AddPrefabPostInit("walter", function(inst)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
--- Pig King trades Berry Bushes for Spotty Shrubs and Grass Tufts for Wheat Saplings.
+-- Pig King Trades Some Items.
 local function BushTrader(inst)	
 	if not GLOBAL.TheWorld.ismastersim then
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("The Architect Pack") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "dug_kyno_spotbush" }
@@ -406,7 +406,7 @@ local function WheatTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("The Architect Pack") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "dug_kyno_wildwheat" }
@@ -416,10 +416,90 @@ local function WheatTrader(inst)
 	end
 end
 
+local function SweetTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_sweetpotato_seeds" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_sweetpotato_seeds" }
+	end
+end
+
+local function RadishTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_radish_seeds" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_radish_seeds" }
+	end
+end
+
+local function FennelTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_fennel_seeds" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_fennel_seeds" }
+	end
+end
+
+local function AloeTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_aloe_seeds" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_aloe_seeds" }
+	end
+end
+
+local function LimpetTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_limpets" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_limpets" }
+	end
+end
+
 AddPrefabPostInit("dug_berrybush", BushTrader)
 AddPrefabPostInit("dug_berrybush2", BushTrader)
 AddPrefabPostInit("dug_berrybush_juicy", BushTrader)
 AddPrefabPostInit("dug_grass", WheatTrader)
+AddPrefabPostInit("potato_seeds", SweetTrader)
+AddPrefabPostInit("carrot_seeds", RadishTrader)
+AddPrefabPostInit("durian_seeds", FennelTrader)
+AddPrefabPostInit("asparagus_seeds", AloeTrader)
+AddPrefabPostInit("cutlichen", LimpetTrader)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Foliage can be cooked into Cooked Foliage.
 AddPrefabPostInit("foliage", function(inst)
@@ -542,6 +622,13 @@ end
 -- Lazy Fix!
 AddPrefabPostInit("duckyouglermz", function(inst)
 	inst.AnimState:SetScale(.8, .8, .8)
+	
+	inst:AddTag("heal_fertilize")
+	inst:AddTag("slowfertilize")
+end)
+
+AddPrefabPostInit("cucumbersalad", function(inst)
+	inst.AnimState:SetScale(1.5, 1.5, 1.5)
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Fix For Spiced Tropical Bouillabaisse.
@@ -639,6 +726,48 @@ end)
 AddPrefabPostInit("tropicalbouillabaisse_spice_salt", function(inst)
 	if inst.components.edible then
 		inst.components.edible:SetOnEatenFn(OnEatBouillabaisse)
+	end
+end)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Make Whenever Someone Eats the Shark Fin Soup a Krampus Spawns.
+local function OnEatSharkSoup(inst, eater)
+	GLOBAL.SpawnPrefab("krampuswarning_lvl3").Transform:SetPosition(inst.Transform:GetWorldPosition())
+	local krampus = GLOBAL.SpawnPrefab("krampus")
+	local pt = GLOBAL.Vector3(inst.Transform:GetWorldPosition()) + GLOBAL.Vector3(15,0,15)
+
+	krampus.Transform:SetPosition(pt:Get())
+	local angle = eater.Transform:GetRotation()*(3.14159/180)
+	local sp = (math.random()+1) * -1
+	krampus.Physics:SetVel(sp*math.cos(angle), math.random()*2+8, -sp*math.sin(angle))
+end
+
+AddPrefabPostInit("sharkfinsoup", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatSharkSoup)
+	end
+end)
+
+AddPrefabPostInit("sharkfinsoup_spice_garlic", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatSharkSoup)
+	end
+end)
+
+AddPrefabPostInit("sharkfinsoup_spice_sugar", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatSharkSoup)
+	end
+end)
+
+AddPrefabPostInit("sharkfinsoup_spice_chili", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatSharkSoup)
+	end
+end)
+
+AddPrefabPostInit("sharkfinsoup_spice_salt", function(inst)
+	if inst.components.edible then
+		inst.components.edible:SetOnEatenFn(OnEatSharkSoup)
 	end
 end)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

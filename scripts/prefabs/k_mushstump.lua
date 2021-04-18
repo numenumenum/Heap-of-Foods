@@ -38,6 +38,11 @@ local function makeemptyfn(inst)
 	inst.AnimState:PlayAnimation("empty", true)
 end
 
+local function onbuilt(inst)
+	inst.components.pickable:MakeEmpty()
+    inst.AnimState:PlayAnimation("empty", true)
+end
+
 local function fn()
 	local inst = CreateEntity()
     
@@ -82,6 +87,8 @@ local function fn()
 	inst.components.workable:SetWorkAction(ACTIONS.DIG)
 	inst.components.workable:SetOnFinishCallback(dig_up)
 	inst.components.workable:SetWorkLeft(1)
+	
+	inst:ListenForEvent("onbuilt", onbuilt)
 
 	MakeSmallBurnable(inst)
     MakeSmallPropagator(inst)
