@@ -1,5 +1,5 @@
 local function makeemptyfn(inst)
-    if inst.components.pickable and inst.components.pickable.withered then
+    if inst.components.pickable then
 		inst.AnimState:PlayAnimation("dead_to_empty")
 		inst.AnimState:PushAnimation("empty")
 	else
@@ -8,7 +8,7 @@ local function makeemptyfn(inst)
 end
 
 local function makebarrenfn(inst)
-    if inst.components.pickable and inst.components.pickable.withered then
+    if inst.components.pickable then
 		if not inst.components.pickable.hasbeenpicked then
 			inst.AnimState:PlayAnimation("full_to_dead")
 		else
@@ -114,9 +114,7 @@ end
 
 local function dig_up_common(inst, worker, numberries)
     if inst.components.pickable ~= nil and inst.components.lootdropper ~= nil then
-        local withered = inst.components.witherable ~= nil and inst.components.witherable:IsWithered()
-
-        if withered or inst.components.pickable:IsBarren() then
+        if inst.components.pickable:IsBarren() then
             inst.components.lootdropper:SpawnLootPrefab("twigs")
             inst.components.lootdropper:SpawnLootPrefab("twigs")
         else
@@ -152,6 +150,17 @@ local function OnHaunt(inst)
     return false
 end
 
+local function CheckSeason(inst, issummer)
+	if TheWorld.state.issummer then
+		inst.components.witherable:Stop()
+		inst.components.witherable:ForceRejuvenate()
+		-- inst.components.witherable:DoPickableRejuvenate()
+		inst.components.witherable:Protect(7200)
+	else
+		inst.components.witherable:Start()
+	end
+end
+
 local function createbush(name, inspectname, berryname, master_postinit)
     local assets =
     {
@@ -182,7 +191,7 @@ local function createbush(name, inspectname, berryname, master_postinit)
 		inst:AddTag("kyno_coffeebush")
         inst:AddTag("bush")
         inst:AddTag("renewable")
-        inst:AddTag("witherable")
+        -- inst:AddTag("witherable")
 		
 		local minimap = inst.entity:AddMiniMapEntity()
 		minimap:SetIcon("kyno_coffeebush.tex")
@@ -207,7 +216,7 @@ local function createbush(name, inspectname, berryname, master_postinit)
         inst.components.pickable.makefullfn = makefullfn
         inst.components.pickable.ontransplantfn = ontransplantfn
 
-        inst:AddComponent("witherable")
+        -- inst:AddComponent("witherable")
 
         inst:AddComponent("lootdropper")
         inst:AddComponent("workable")
@@ -227,6 +236,13 @@ local function createbush(name, inspectname, berryname, master_postinit)
         if IsSpecialEventActive(SPECIAL_EVENTS.YOTG) then
             inst:ListenForEvent("spawnperd", spawnperd)
         end
+		
+		--[[
+		inst:DoTaskInTime(1/30, function()
+		inst:WatchWorldState("issummer", CheckSeason)
+		CheckSeason(inst, TheWorld.state.issummer)
+		end)
+		]]--
 		
         return inst
     end

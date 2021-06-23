@@ -266,7 +266,7 @@ local KynSalt = AddRecipe("kyno_salt", {Ingredient("saltrock", 2)},
 MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 3, nil, "images/inventoryimages.xml", "quagmire_salt.tex")
 
 local KynBacon = AddRecipe("kyno_bacon", {Ingredient("smallmeat", 1)},
-MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 1, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
+MEALINGTAB, TECH.MEALING_ONE, nil, nil, true, 2, nil, "images/inventoryimages.xml", "quagmire_smallmeat.tex")
 
 local KynMusher = AddRecipe("kyno_mushstump", {Ingredient("spoiled_food", 4), Ingredient("poop", 3), Ingredient("livinglog", 2)},
 RECIPETABS.FARM, TECH.SCIENCE_TWO, "kyno_mushstump_placer", 0, nil, nil, nil, "images/inventoryimages/kyno_mushroomstump.xml", "kyno_mushroomstump.tex")

@@ -391,7 +391,7 @@ local function BushTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "dug_kyno_spotbush" }
@@ -406,7 +406,7 @@ local function WheatTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "dug_kyno_wildwheat" }
@@ -421,7 +421,7 @@ local function SweetTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_sweetpotato_seeds" }
@@ -436,7 +436,7 @@ local function RadishTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_radish_seeds" }
@@ -451,7 +451,7 @@ local function FennelTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_fennel_seeds" }
@@ -466,7 +466,7 @@ local function AloeTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_aloe_seeds" }
@@ -481,7 +481,7 @@ local function LimpetTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_limpets" }
@@ -496,7 +496,7 @@ local function TaroTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_taroroot" }
@@ -511,7 +511,7 @@ local function LotusTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_lotus_flower" }
@@ -526,7 +526,7 @@ local function CressTrader(inst)
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_waterycress" }
@@ -536,18 +536,33 @@ local function CressTrader(inst)
 	end
 end
 
-local function CressTrader(inst)
+local function CucumberTrader(inst)
 	if not GLOBAL.TheWorld.ismastersim then
 		return inst
 	end
 	
-	if inst.components.inventoryitem ~= nil and not inst.components.tradable and not GLOBAL.KnownModIndex:IsModEnabled("workshop-2428854303") then
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
 		inst:AddComponent("tradable")
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_cucumber_seeds" }
 	else
 		inst.components.tradable.goldvalue = 1
 		inst.components.tradable.tradefor = { "kyno_cucumber_seeds" }
+	end
+end
+
+local function WeedTrader(inst)
+	if not GLOBAL.TheWorld.ismastersim then
+		return inst
+	end
+	
+	if inst.components.inventoryitem ~= nil and not inst.components.tradable then
+		inst:AddComponent("tradable")
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_seaweeds_root" }
+	else
+		inst.components.tradable.goldvalue = 1
+		inst.components.tradable.tradefor = { "kyno_seaweeds_root" }
 	end
 end
 
@@ -564,6 +579,7 @@ AddPrefabPostInit("eggplant", TaroTrader)
 AddPrefabPostInit("butterfly", LotusTrader)
 AddPrefabPostInit("succulent_picked", CressTrader)
 AddPrefabPostInit("watermelon_seeds", CucumberTrader)
+AddPrefabPostInit("kelp", WeedTrader)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Foliage can be cooked into Cooked Foliage.
 AddPrefabPostInit("foliage", function(inst)
